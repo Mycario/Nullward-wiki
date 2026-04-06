@@ -1,8 +1,3 @@
-// ─── AUTH ───
-// Password is hashed with SHA-256, never stored in plaintext
-// The hash below corresponds to 'Null'
-const CORRECT_HASH = 'a4b2c3e1d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2';
-
 async function hashPassword(password) {
   const encoder = new TextEncoder();
   const data = encoder.encode(password);
@@ -11,20 +6,18 @@ async function hashPassword(password) {
   return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
+async function initCorrectHash() {
+  if (!sessionStorage.getItem('null_correct')) {
+    const h = await hashPassword('Null');
+    sessionStorage.setItem('null_correct', h);
+  }
+}
+
 async function attemptLogin(password) {
   const hash = await hashPassword(password);
-  // NOTE: Replace CORRECT_HASH above with the output of hashPassword('Null')
-  // Run this once in console: hashPassword('Null').then(h => console.log(h))
-  // Then paste the result as CORRECT_HASH
-  if (hash === sessionStorage.getItem('null_auth_hash')) {
-    return true;
-  }
-  // First time: store the hash of the correct password for comparison
-  // This is set during init
-  const storedHash = sessionStorage.getItem('null_correct');
-  if (storedHash && hash === storedHash) {
+  const correct = sessionStorage.getItem('null_correct');
+  if (correct && hash === correct) {
     sessionStorage.setItem('null_auth', 'true');
-    sessionStorage.setItem('null_auth_hash', hash);
     return true;
   }
   return false;
@@ -36,7 +29,6 @@ function isLoggedIn() {
 
 function logout() {
   sessionStorage.removeItem('null_auth');
-  sessionStorage.removeItem('null_auth_hash');
   document.body.classList.remove('editor-active');
   document.querySelectorAll('.editor-bar').forEach(b => b.classList.remove('visible'));
   updateLoginTrigger();
@@ -58,13 +50,8 @@ function updateLoginTrigger() {
   }
 }
 
-// ─── INIT AUTH ───
 async function initAuth() {
-  // Pre-compute and store the correct hash on first load
-  if (!sessionStorage.getItem('null_correct')) {
-    const correctHash = await hashPassword('Null');
-    sessionStorage.setItem('null_correct', correctHash);
-  }
+  await initCorrectHash();
 
   const trigger = document.getElementById('login-trigger');
   const modal = document.getElementById('login-modal');
@@ -75,22 +62,16 @@ async function initAuth() {
 
   if (!trigger || !modal) return;
 
+  updateLoginTrigger();
+
   trigger.addEventListener('click', () => {
-    if (isLoggedIn()) {
-      logout();
-      return;
-    }
+    if (isLoggedIn()) { logout(); return; }
     modal.classList.add('open');
     setTimeout(() => input && input.focus(), 100);
   });
 
-  if (closeBtn) {
-    closeBtn.addEventListener('click', () => modal.classList.remove('open'));
-  }
-
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) modal.classList.remove('open');
-  });
+  if (closeBtn) closeBtn.addEventListener('click', () => modal.classList.remove('open'));
+  modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('open'); });
 
   async function doLogin() {
     const pw = input.value;
@@ -102,22 +83,13 @@ async function initAuth() {
       if (errorMsg) errorMsg.classList.remove('visible');
       updateLoginTrigger();
     } else {
-      if (errorMsg) {
-        errorMsg.textContent = '// ACCESS DENIED — INVALID CREDENTIALS';
-        errorMsg.classList.add('visible');
-        input.value = '';
-        input.classList.add('shake');
-        setTimeout(() => input.classList.remove('shake'), 400);
-      }
+      if (errorMsg) { errorMsg.textContent = '// ACCESS DENIED — INVALID CREDENTIALS'; errorMsg.classList.add('visible'); }
+      input.value = '';
+      input.classList.add('shake');
+      setTimeout(() => input.classList.remove('shake'), 400);
     }
   }
 
   if (submitBtn) submitBtn.addEventListener('click', doLogin);
-  if (input) {
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') doLogin();
-    });
-  }
-
-  updateLoginTrigger();
+  if (input) input.addEventListener('keydown', (e) => { if (e.key === 'Enter') doLogin(); });
 }

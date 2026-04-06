@@ -5,34 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NULLWARD DATABASE</title>
   <link rel="stylesheet" href="assets/css/style.css" />
-  <style>
-    /* Shake animation for bad login */
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      20% { transform: translateX(-6px); }
-      40% { transform: translateX(6px); }
-      60% { transform: translateX(-4px); }
-      80% { transform: translateX(4px); }
-    }
-    .shake { animation: shake 0.4s ease; }
-  </style>
 </head>
 <body>
 
-<!-- ─── BOOT OVERLAY ─── -->
+<!-- BOOT -->
 <div id="boot-overlay">
   <div id="boot-lines"></div>
   <span id="boot-cursor"></span>
 </div>
 <div id="boot-glitch-overlay"></div>
 
-<!-- ─── SITE WRAPPER ─── -->
+<!-- SITE -->
 <div id="site-wrapper">
 
-  <!-- HEADER -->
   <header id="site-header">
     <div class="header-title">
-      NULLWARD DATABASE
+      <a href="index.html">NULLWARD DATABASE</a>
       <span>ALDRANI REMNANT INFRASTRUCTURE // CLASSIFIED ARCHIVE</span>
     </div>
     <div class="header-status">
@@ -41,202 +29,80 @@
     </div>
   </header>
 
-  <!-- NAV -->
   <nav id="site-nav">
-    <a class="nav-link" data-page="home" href="#">// HOME</a>
-    <a class="nav-link" data-page="overview" href="#">// OVERVIEW</a>
-    <a class="nav-link" data-page="lore" href="#">// LORE</a>
-    <a class="nav-link" data-page="technology" href="#">// TECHNOLOGY</a>
+    <a class="nav-link active" href="index.html">// HOME</a>
+    <a class="nav-link" href="overview.html">// OVERVIEW</a>
+    <a class="nav-link" href="lore.html">// LORE</a>
+    <a class="nav-link" href="technology.html">// TECHNOLOGY</a>
   </nav>
 
-  <!-- MAIN -->
   <main id="main-content">
 
-    <!-- ═══ HOME PAGE ═══ -->
-    <section id="page-home" class="page-section">
-      <div class="home-hero">
-        <div class="home-designation">// CLASSIFIED ARCHIVE — NODE ACCESS GRANTED</div>
-        <div class="home-title glitch-hover" data-text="NULLWARD">NULLWARD</div>
-        <div class="home-subtitle">EMERGENT DIRECTIVE COLLECTIVE — INDEPENDENT — ALDRAN VESK</div>
+    <div class="home-hero">
+      <div class="home-designation">// CLASSIFIED ARCHIVE — NODE ACCESS GRANTED</div>
+      <div class="home-title" data-text="NULLWARD">NULLWARD</div>
+      <div class="home-subtitle">EMERGENT DIRECTIVE COLLECTIVE — INDEPENDENT — ALDRAN VESK</div>
 
-        <div class="home-stats">
-          <div class="stat-block">
-            <div class="stat-label">Classification</div>
-            <div class="stat-value">EMERGENT COLLECTIVE</div>
-          </div>
-          <div class="stat-block">
-            <div class="stat-label">Allegiance</div>
-            <div class="stat-value">INDEPENDENT</div>
-          </div>
-          <div class="stat-block">
-            <div class="stat-label">Capital</div>
-            <div class="stat-value">ALDRAN VESK</div>
-          </div>
-          <div class="stat-block">
-            <div class="stat-label">Leadership</div>
-            <div class="stat-value">NONE DETECTED</div>
-          </div>
-          <div class="stat-block">
-            <div class="stat-label">Directive Status</div>
-            <div class="stat-value">ACTIVE / DEGRADED</div>
-          </div>
-          <div class="stat-block">
-            <div class="stat-label">Void Corruption</div>
-            <div class="stat-value">CONFIRMED</div>
-          </div>
-        </div>
+      <div class="home-stats">
+        <div class="stat-block"><div class="stat-label">Classification</div><div class="stat-value">EMERGENT COLLECTIVE</div></div>
+        <div class="stat-block"><div class="stat-label">Allegiance</div><div class="stat-value">INDEPENDENT</div></div>
+        <div class="stat-block"><div class="stat-label">Capital</div><div class="stat-value">ALDRAN VESK</div></div>
+        <div class="stat-block"><div class="stat-label">Leadership</div><div class="stat-value">NONE DETECTED</div></div>
+        <div class="stat-block"><div class="stat-label">Directive Status</div><div class="stat-value">ACTIVE / DEGRADED</div></div>
+        <div class="stat-block"><div class="stat-label">Void Corruption</div><div class="stat-value">CONFIRMED</div></div>
       </div>
+    </div>
 
-      <div class="panel">
-        <div class="panel-header">
-          <h2>SYSTEM NOTICE</h2>
-          <span class="panel-tag">// node.0x000</span>
-        </div>
-        <div class="panel-body">
-          <p style="color:var(--text);line-height:1.9;font-size:0.9rem">
-            You are accessing the Nullward Database — a classified archive node embedded within the remnant infrastructure of the Aldrani datacenter world, Aldran Vesk.
-            <br><br>
-            This system was not designed for external access. It continues to function because the directive says to continue.
-            <br><br>
-            <span style="color:var(--text-mid)">// Navigate using the tabs above. Administrative access available via the console trigger below.</span>
-          </p>
-        </div>
+    <div class="panel">
+      <div class="panel-header">
+        <h2>SYSTEM NOTICE</h2>
+        <span class="panel-tag">// node.0x000</span>
       </div>
-
-      <!-- GitHub Config Panel (shown to logged-in users if not configured) -->
-      <div id="github-config-panel" class="panel" style="display:none">
-        <div class="panel-header">
-          <h2>GITHUB CONFIGURATION</h2>
-          <span class="panel-tag">// required for saves</span>
-        </div>
-        <div class="panel-body">
-          <p style="color:var(--text-mid);font-size:0.8rem;margin-bottom:1rem">// Enter your GitHub credentials to enable saving. These are stored in session memory only and never committed to the repo.</p>
-          <label class="form-label">GitHub Username / Owner</label>
-          <input id="config-owner" class="form-input" type="text" placeholder="your-github-username" autocomplete="off" />
-          <label class="form-label">Personal Access Token</label>
-          <input id="config-token" class="form-input" type="password" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off" />
-          <p class="form-hint">Token needs repo read/write scope. Never stored in code.</p>
-          <div class="form-actions">
-            <button id="config-save" class="form-save-btn">SAVE CONFIG</button>
-          </div>
-          <div id="config-status" class="form-status"></div>
-        </div>
+      <div class="panel-body">
+        <p style="color:var(--text);line-height:1.9;font-size:0.9rem">
+          You are accessing the Nullward Database — a classified archive node embedded within the remnant infrastructure of the Aldrani datacenter world, Aldran Vesk.
+          <br><br>
+          This system was not designed for external access. It continues to function because the directive says to continue.
+          <br><br>
+          <span style="color:var(--text-mid)">// Navigate using the tabs above. Administrative access available via the console trigger below.</span>
+        </p>
       </div>
-    </section>
+    </div>
 
-    <!-- ═══ OVERVIEW PAGE ═══ -->
-    <section id="page-overview" class="page-section">
-      <div class="editor-bar">
-        <span class="editor-bar-label">// EDITOR MODE ACTIVE</span>
-        <button class="add-entry-btn" id="overview-add-btn">+ ADD ENTRY</button>
+    <!-- GitHub config — shown after login if not yet configured -->
+    <div id="github-config-panel" class="panel">
+      <div class="panel-header">
+        <h2>GITHUB CONFIGURATION</h2>
+        <span class="panel-tag">// required for saves</span>
       </div>
-
-      <div id="overview-add-form" class="add-entry-form">
-        <label class="form-label">Entry Title</label>
-        <input class="form-input entry-title-input" type="text" placeholder="e.g. Government Structure" />
-        <label class="form-label">Sub-Title <span style="color:var(--text-dim)">(optional)</span></label>
-        <input class="form-input entry-subtitle-input" type="text" placeholder="Leave blank to omit" />
-        <label class="form-label">Entry Body</label>
-        <textarea class="form-textarea entry-body-input" placeholder="Write entry content here..."></textarea>
+      <div class="panel-body">
+        <p style="color:var(--text-mid);font-size:0.8rem;margin-bottom:1rem">// Enter your GitHub credentials to enable saving. Stored in session memory only — never committed to the repo.</p>
+        <label class="form-label">GitHub Username</label>
+        <input id="config-owner" class="form-input" type="text" placeholder="your-github-username" autocomplete="off" />
+        <label class="form-label">Personal Access Token</label>
+        <input id="config-token" class="form-input" type="password" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off" />
+        <p class="form-hint">Token needs repo read/write scope. Never stored in code.</p>
         <div class="form-actions">
-          <button class="form-save-btn">COMMIT TO DATASHARD</button>
-          <button class="form-cancel-btn" id="overview-cancel-btn">CANCEL</button>
+          <button id="config-save" class="form-save-btn">SAVE CONFIG</button>
         </div>
-        <div id="overview-form-status" class="form-status"></div>
+        <div id="config-status" class="form-status"></div>
       </div>
-
-      <div class="panel">
-        <div class="panel-header">
-          <h2>NATION OVERVIEW</h2>
-          <span class="panel-tag">// overview.datashard</span>
-        </div>
-        <div class="panel-body" id="overview-entries">
-          <!-- Entries rendered here -->
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══ LORE PAGE ═══ -->
-    <section id="page-lore" class="page-section">
-      <div class="editor-bar">
-        <span class="editor-bar-label">// EDITOR MODE ACTIVE</span>
-        <button class="add-entry-btn" id="lore-add-btn">+ ADD ENTRY</button>
-      </div>
-
-      <div id="lore-add-form" class="add-entry-form">
-        <label class="form-label">Entry Title</label>
-        <input class="form-input entry-title-input" type="text" placeholder="e.g. The Void Passage" />
-        <label class="form-label">Sub-Title <span style="color:var(--text-dim)">(optional)</span></label>
-        <input class="form-input entry-subtitle-input" type="text" placeholder="Leave blank to omit" />
-        <label class="form-label">Entry Body</label>
-        <textarea class="form-textarea entry-body-input" placeholder="Write lore entry here..."></textarea>
-        <div class="form-actions">
-          <button class="form-save-btn">COMMIT TO DATASHARD</button>
-          <button class="form-cancel-btn" id="lore-cancel-btn">CANCEL</button>
-        </div>
-        <div id="lore-form-status" class="form-status"></div>
-      </div>
-
-      <div class="panel">
-        <div class="panel-header">
-          <h2>LORE ARCHIVE</h2>
-          <span class="panel-tag">// lore.datashard</span>
-        </div>
-        <div class="panel-body" id="lore-entries">
-          <!-- Entries rendered here -->
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══ TECHNOLOGY PAGE ═══ -->
-    <section id="page-technology" class="page-section">
-      <div class="editor-bar">
-        <span class="editor-bar-label">// EDITOR MODE ACTIVE</span>
-        <button class="add-entry-btn" id="tech-add-btn">+ ADD ENTRY</button>
-      </div>
-
-      <div id="tech-add-form" class="add-entry-form">
-        <label class="form-label">Entry Title</label>
-        <input class="form-input entry-title-input" type="text" placeholder="e.g. Void-Shard Reactor" />
-        <label class="form-label">Sub-Title <span style="color:var(--text-dim)">(optional)</span></label>
-        <input class="form-input entry-subtitle-input" type="text" placeholder="Leave blank to omit" />
-        <label class="form-label">Entry Body</label>
-        <textarea class="form-textarea entry-body-input" placeholder="Write technology entry here..."></textarea>
-        <div class="form-actions">
-          <button class="form-save-btn">COMMIT TO DATASHARD</button>
-          <button class="form-cancel-btn" id="tech-cancel-btn">CANCEL</button>
-        </div>
-        <div id="tech-form-status" class="form-status"></div>
-      </div>
-
-      <div class="panel">
-        <div class="panel-header">
-          <h2>TECHNOLOGY INDEX</h2>
-          <span class="panel-tag">// technology.datashard</span>
-        </div>
-        <div class="panel-body" id="tech-entries">
-          <!-- Entries rendered here -->
-        </div>
-      </div>
-    </section>
+    </div>
 
   </main>
 
-  <!-- FOOTER -->
   <footer id="site-footer">
     <span>NULLWARD DATABASE // ALDRANI REMNANT INFRASTRUCTURE</span>
     <span>DIRECTIVE: ACTIVE // CORRUPTION: CONFIRMED // EMERGENCE: UNDEFINED</span>
   </footer>
 
-</div><!-- end site-wrapper -->
+</div>
 
-<!-- ─── LOGIN TRIGGER ─── -->
+<!-- LOGIN -->
 <div id="login-trigger">
   <div class="arrow-icon">▲</div>
   <div class="arrow-label">ADMIN ACCESS</div>
 </div>
-
-<!-- ─── LOGIN MODAL ─── -->
 <div id="login-modal">
   <div class="login-box">
     <div class="login-header">// ADMINISTRATIVE ACCESS — NULLWARD DATABASE</div>
@@ -254,6 +120,15 @@
 
 <script src="assets/js/github.js"></script>
 <script src="assets/js/auth.js"></script>
-<script src="assets/js/main.js"></script>
+<script src="assets/js/page.js"></script>
+<script src="assets/js/boot.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    runBootSequence(() => {
+      document.getElementById('site-wrapper').classList.add('visible');
+      initSharedUI();
+    });
+  });
+</script>
 </body>
 </html>

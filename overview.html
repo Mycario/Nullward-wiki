@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NULLWARD — OVERVIEW</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+<div id="site-wrapper" class="visible">
+
+  <header id="site-header">
+    <div class="header-title">
+      <a href="index.html">NULLWARD DATABASE</a>
+      <span>ALDRANI REMNANT INFRASTRUCTURE // CLASSIFIED ARCHIVE</span>
+    </div>
+    <div class="header-status">
+      <div><span class="status-dot"></span>SYSTEM OPERATIONAL</div>
+      <div style="margin-top:4px;font-size:0.8rem">DIRECTIVE: EXPAND / BUILD / PERSIST</div>
+    </div>
+  </header>
+
+  <nav id="site-nav">
+    <a class="nav-link" href="index.html">// HOME</a>
+    <a class="nav-link active" href="overview.html">// OVERVIEW</a>
+    <a class="nav-link" href="lore.html">// LORE</a>
+    <a class="nav-link" href="technology.html">// TECHNOLOGY</a>
+  </nav>
+
+  <main id="main-content">
+
+    <div class="editor-bar" id="editor-bar">
+      <span class="editor-bar-label">// EDITOR MODE ACTIVE</span>
+      <button class="add-entry-btn" id="overview-add-btn">+ ADD ENTRY</button>
+    </div>
+
+    <div class="add-entry-form" id="overview-add-form">
+      <label class="form-label">Entry Title</label>
+      <input class="form-input entry-title-input" type="text" placeholder="e.g. Government Structure" />
+      <label class="form-label">Sub-Title <span style="color:var(--text-dim)">(optional)</span></label>
+      <input class="form-input entry-subtitle-input" type="text" placeholder="Leave blank to omit" />
+      <label class="form-label">Entry Body</label>
+      <textarea class="form-textarea entry-body-input" placeholder="Write entry content here..."></textarea>
+      <div class="form-actions">
+        <button class="form-save-btn">COMMIT TO DATASHARD</button>
+        <button class="form-cancel-btn" id="overview-cancel-btn">CANCEL</button>
+      </div>
+      <div id="overview-form-status" class="form-status"></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <h2>NATION OVERVIEW</h2>
+        <span class="panel-tag">// overview.datashard</span>
+      </div>
+      <div class="panel-body" id="overview-entries"></div>
+    </div>
+
+  </main>
+
+  <footer id="site-footer">
+    <span>NULLWARD DATABASE // ALDRANI REMNANT INFRASTRUCTURE</span>
+    <span>DIRECTIVE: ACTIVE // CORRUPTION: CONFIRMED // EMERGENCE: UNDEFINED</span>
+  </footer>
+
+</div>
+
+<div id="login-trigger">
+  <div class="arrow-icon">▲</div>
+  <div class="arrow-label">ADMIN ACCESS</div>
+</div>
+<div id="login-modal">
+  <div class="login-box">
+    <div class="login-header">// ADMINISTRATIVE ACCESS — NULLWARD DATABASE</div>
+    <div class="login-prompt">&gt; ENTER PASSPHRASE:</div>
+    <div class="login-input-row">
+      <input id="login-password-input" class="login-input" type="password" autocomplete="off" spellcheck="false" />
+      <button id="login-submit" class="login-btn">AUTH</button>
+    </div>
+    <div id="login-error" class="login-error"></div>
+    <div style="margin-top:1rem;text-align:right">
+      <button id="login-close" style="background:none;border:none;color:var(--text-dim);font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.1em;cursor:pointer;text-transform:uppercase">// ABORT</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/github.js"></script>
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/page.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    initSharedUI();
+    initAddEntry({
+      formId: 'overview-add-form',
+      btnId: 'overview-add-btn',
+      cancelId: 'overview-cancel-btn',
+      statusId: 'overview-form-status',
+      containerId: 'overview-entries',
+      dataFile: 'overview.json'
+    });
+  });
+</script>
+</body>
+</html>
