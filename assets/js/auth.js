@@ -82,6 +82,7 @@ async function initAuth() {
       input.value = '';
       if (errorMsg) errorMsg.classList.remove('visible');
       updateLoginTrigger();
+      if (typeof initConfigPanel === 'function') initConfigPanel();
     } else {
       if (errorMsg) { errorMsg.textContent = '// ACCESS DENIED — INVALID CREDENTIALS'; errorMsg.classList.add('visible'); }
       input.value = '';
