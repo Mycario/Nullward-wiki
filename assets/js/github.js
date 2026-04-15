@@ -1,13 +1,13 @@
 function loadGithubConfig() {
-  window.GITHUB_OWNER = sessionStorage.getItem('null_gh_owner') || 'Mycario';
-  window.GITHUB_TOKEN = sessionStorage.getItem('null_gh_token') || '';
-  window.GITHUB_REPO = 'Nullward-wiki';
+  window.GITHUB_OWNER = sessionStorage.getItem('solv_gh_owner') || 'Mycario';
+  window.GITHUB_TOKEN = sessionStorage.getItem('solv_gh_token') || '';
+  window.GITHUB_REPO = 'Solveyra-wiki';
   window.GITHUB_BRANCH = 'main';
 }
 
 function setGithubConfig(owner, token) {
-  sessionStorage.setItem('null_gh_owner', owner);
-  sessionStorage.setItem('null_gh_token', token);
+  sessionStorage.setItem('solv_gh_owner', owner);
+  sessionStorage.setItem('solv_gh_token', token);
   loadGithubConfig();
 }
 

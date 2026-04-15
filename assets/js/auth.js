@@ -7,28 +7,28 @@ async function hashPassword(password) {
 }
 
 async function initCorrectHash() {
-  if (!sessionStorage.getItem('null_correct')) {
-    const h = await hashPassword('Null');
-    sessionStorage.setItem('null_correct', h);
+  if (!sessionStorage.getItem('solv_correct')) {
+    const h = await hashPassword('Solveyra');
+    sessionStorage.setItem('solv_correct', h);
   }
 }
 
 async function attemptLogin(password) {
   const hash = await hashPassword(password);
-  const correct = sessionStorage.getItem('null_correct');
+  const correct = sessionStorage.getItem('solv_correct');
   if (correct && hash === correct) {
-    sessionStorage.setItem('null_auth', 'true');
+    sessionStorage.setItem('solv_auth', 'true');
     return true;
   }
   return false;
 }
 
 function isLoggedIn() {
-  return sessionStorage.getItem('null_auth') === 'true';
+  return sessionStorage.getItem('solv_auth') === 'true';
 }
 
 function logout() {
-  sessionStorage.removeItem('null_auth');
+  sessionStorage.removeItem('solv_auth');
   document.body.classList.remove('editor-active');
   document.querySelectorAll('.editor-bar').forEach(b => b.classList.remove('visible'));
   updateLoginTrigger();

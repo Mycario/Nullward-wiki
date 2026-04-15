@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NULLWARD — TECHNOLOGY</title>
+  <title>SOLVEYRA — TECHNOLOGY</title>
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
@@ -12,12 +12,12 @@
 
   <header id="site-header">
     <div class="header-title">
-      <a href="index.html">NULLWARD DATABASE</a>
-      <span>ALDRANI REMNANT INFRASTRUCTURE // CLASSIFIED ARCHIVE</span>
+      <a href="index.html">SOLVEYRA DATABASE</a>
+      <span>VARN SYSTEM // VELUNDRA // NATIONAL ARCHIVE</span>
     </div>
     <div class="header-status">
       <div><span class="status-dot"></span>SYSTEM OPERATIONAL</div>
-      <div style="margin-top:4px;font-size:0.8rem">DIRECTIVE: EXPAND / BUILD / PERSIST</div>
+      <div style="margin-top:4px;font-size:0.8rem">DYSON ARRAY: NOMINAL // DEPTH ZONES: ACTIVE</div>
     </div>
   </header>
 
@@ -26,6 +26,7 @@
     <a class="nav-link" href="overview.html">// OVERVIEW</a>
     <a class="nav-link" href="lore.html">// LORE</a>
     <a class="nav-link active" href="technology.html">// TECHNOLOGY</a>
+    <a class="nav-link" href="species.html">// SPECIES</a>
   </nav>
 
   <main id="main-content">
@@ -35,33 +36,27 @@
       <button class="add-entry-btn" id="tech-add-btn">+ ADD ENTRY</button>
     </div>
 
-    <div class="add-entry-form" id="tech-add-form">
-      <label class="form-label">Entry Title</label>
-      <input class="form-input entry-title-input" type="text" placeholder="e.g. Void-Shard Reactor" />
-      <label class="form-label">Sub-Title <span style="color:var(--text-dim)">(optional)</span></label>
-      <input class="form-input entry-subtitle-input" type="text" placeholder="Leave blank to omit" />
-      <label class="form-label">Entry Body</label>
-      <textarea class="form-textarea entry-body-input" placeholder="Write technology entry here..."></textarea>
-      <div class="form-actions">
-        <button class="form-save-btn">COMMIT TO DATASHARD</button>
-        <button class="form-cancel-btn" id="tech-cancel-btn">CANCEL</button>
+    <div class="sidebar-layout">
+      <div class="sidebar" id="tech-sidebar">
+        <div class="sidebar-header">// TECHNOLOGY INDEX</div>
+        <ul class="sidebar-list"></ul>
       </div>
-      <div id="tech-form-status" class="form-status"></div>
-    </div>
-
-    <div class="panel">
-      <div class="panel-header">
-        <h2>TECHNOLOGY INDEX</h2>
-        <span class="panel-tag">// technology.datashard</span>
+      <div class="doc-viewer" id="tech-viewer">
+        <div class="doc-viewer-header">
+          <div class="doc-viewer-title">// SELECT AN ENTRY</div>
+          <div></div>
+        </div>
+        <div class="doc-viewer-body">
+          <div class="doc-viewer-empty">// SELECT AN ENTRY FROM THE SIDEBAR</div>
+        </div>
       </div>
-      <div class="panel-body" id="tech-entries"></div>
     </div>
 
   </main>
 
   <footer id="site-footer">
-    <span>NULLWARD DATABASE // ALDRANI REMNANT INFRASTRUCTURE</span>
-    <span>DIRECTIVE: ACTIVE // CORRUPTION: CONFIRMED // EMERGENCE: UNDEFINED</span>
+    <span>SOLVEYRA DATABASE // VELUNDRA, VARN SYSTEM</span>
+    <span>COUNCIL: ACTIVE // DYSON ARRAY: NOMINAL // FTL: ONLINE</span>
   </footer>
 
 </div>
@@ -72,7 +67,7 @@
 </div>
 <div id="login-modal">
   <div class="login-box">
-    <div class="login-header">// ADMINISTRATIVE ACCESS — NULLWARD DATABASE</div>
+    <div class="login-header">// ADMINISTRATIVE ACCESS — SOLVEYRA DATABASE</div>
     <div class="login-prompt">&gt; ENTER PASSPHRASE:</div>
     <div class="login-input-row">
       <input id="login-password-input" class="login-input" type="password" autocomplete="off" spellcheck="false" />
@@ -91,12 +86,11 @@
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     initSharedUI();
-    initAddEntry({
-      formId: 'tech-add-form',
-      btnId: 'tech-add-btn',
-      cancelId: 'tech-cancel-btn',
-      statusId: 'tech-form-status',
-      containerId: 'tech-entries',
+    initSidebarPage({
+      sidebarId: 'tech-sidebar',
+      viewerId: 'tech-viewer',
+      editorBarId: 'editor-bar',
+      addBtnId: 'tech-add-btn',
       dataFile: 'technology.json'
     });
   });

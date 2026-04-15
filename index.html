@@ -3,29 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NULLWARD DATABASE</title>
+  <title>SOLVEYRA — NATIONAL DATABASE</title>
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
 
-<!-- BOOT -->
-<div id="boot-overlay">
-  <div id="boot-lines"></div>
-  <span id="boot-cursor"></span>
-</div>
-<div id="boot-glitch-overlay"></div>
-
-<!-- SITE -->
-<div id="site-wrapper">
+<div id="site-wrapper" class="visible">
 
   <header id="site-header">
     <div class="header-title">
-      <a href="index.html">NULLWARD DATABASE</a>
-      <span>ALDRANI REMNANT INFRASTRUCTURE // CLASSIFIED ARCHIVE</span>
+      <a href="index.html">SOLVEYRA DATABASE</a>
+      <span>VARN SYSTEM // VELUNDRA // NATIONAL ARCHIVE</span>
     </div>
     <div class="header-status">
       <div><span class="status-dot"></span>SYSTEM OPERATIONAL</div>
-      <div style="margin-top:4px;font-size:0.8rem">DIRECTIVE: EXPAND / BUILD / PERSIST</div>
+      <div style="margin-top:4px;font-size:0.8rem">DYSON ARRAY: NOMINAL // DEPTH ZONES: ACTIVE</div>
     </div>
   </header>
 
@@ -34,37 +26,39 @@
     <a class="nav-link" href="overview.html">// OVERVIEW</a>
     <a class="nav-link" href="lore.html">// LORE</a>
     <a class="nav-link" href="technology.html">// TECHNOLOGY</a>
+    <a class="nav-link" href="species.html">// SPECIES</a>
   </nav>
 
   <main id="main-content">
 
     <div class="home-hero">
-      <div class="home-designation">// CLASSIFIED ARCHIVE — NODE ACCESS GRANTED</div>
-      <div class="home-title" data-text="NULLWARD">NULLWARD</div>
-      <div class="home-subtitle">CORRUPTED AI NETWORK — ALDRAN VESK</div>
+      <div class="home-designation">// NATIONAL ARCHIVE — ACCESS GRANTED</div>
+      <div class="home-title" data-text="SOLVEYRA">SOLVEYRA</div>
+      <div class="home-subtitle">OCEAN NATION — VELUNDRA, VARN SYSTEM</div>
 
       <div class="home-stats">
-        <div class="stat-block"><div class="stat-label">Classification</div><div class="stat-value">CORRUPTED AI NETWORK</div></div>
-        <div class="stat-block"><div class="stat-label">Capital</div><div class="stat-value">ALDRAN VESK</div></div>
-        <div class="stat-block"><div class="stat-label">Leadership</div><div class="stat-value">NULLWARD</div></div>
-
+        <div class="stat-block"><div class="stat-label">Classification</div><div class="stat-value">SOVEREIGN NATION</div></div>
+        <div class="stat-block"><div class="stat-label">Homeworld</div><div class="stat-value">VELUNDRA</div></div>
+        <div class="stat-block"><div class="stat-label">Star</div><div class="stat-value amber">VARN</div></div>
+        <div class="stat-block"><div class="stat-label">Species</div><div class="stat-value">MAELSTRORCA</div></div>
+        <div class="stat-block"><div class="stat-label">Government</div><div class="stat-value">ELECTED COUNCIL</div></div>
+        <div class="stat-block"><div class="stat-label">Energy</div><div class="stat-value amber">DYSON ARRAY</div></div>
       </div>
     </div>
 
     <div class="panel">
       <div class="panel-header">
-        <h2>SYSTEM NOTICE</h2>
-        <span class="panel-tag">// node.0x000</span>
+        <h2>ARCHIVE NOTICE</h2>
+        <span class="panel-tag">// node.velundra.0x000</span>
       </div>
       <div class="panel-body">
         <p style="color:var(--text);line-height:1.9;font-size:0.9rem">
-          You are accessing the Nullward Database — a classified archive node embedded within the remnant infrastructure of the Aldrani datacenter world, Aldran Vesk.
-          <span style="color:var(--text-mid)">// Navigate using the tabs above. Administrative access available via the console trigger below.</span>
+          You are accessing the Solveyra National Database — the official archive of the Solveyran state, maintained from the deep-water administrative zone of Velundra.
+          <span style="color:var(--text-mid)"> // Navigate using the tabs above. Administrative access available via the console trigger below.</span>
         </p>
       </div>
     </div>
 
-    <!-- GitHub config — shown after login if not yet configured -->
     <div id="github-config-panel" class="panel">
       <div class="panel-header">
         <h2>GITHUB CONFIGURATION</h2>
@@ -77,30 +71,29 @@
         <label class="form-label">Personal Access Token</label>
         <input id="config-token" class="form-input" type="password" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off" />
         <p class="form-hint">Token needs repo read/write scope. Never stored in code.</p>
-        <div class="form-actions">
+        <div class="form-actions" style="margin-top:1rem">
           <button id="config-save" class="form-save-btn">SAVE CONFIG</button>
         </div>
-        <div id="config-status" class="form-status"></div>
+        <div id="config-status" class="form-status" style="margin-top:0.5rem"></div>
       </div>
     </div>
 
   </main>
 
   <footer id="site-footer">
-    <span>NULLWARD DATABASE // ALDRANI REMNANT INFRASTRUCTURE</span>
-    <span>DIRECTIVE: ACTIVE // CORRUPTION: CONFIRMED // EMERGENCE: UNDEFINED</span>
+    <span>SOLVEYRA DATABASE // VELUNDRA, VARN SYSTEM</span>
+    <span>COUNCIL: ACTIVE // DYSON ARRAY: NOMINAL // FTL: ONLINE</span>
   </footer>
 
 </div>
 
-<!-- LOGIN -->
 <div id="login-trigger">
   <div class="arrow-icon">▲</div>
   <div class="arrow-label">ADMIN ACCESS</div>
 </div>
 <div id="login-modal">
   <div class="login-box">
-    <div class="login-header">// ADMINISTRATIVE ACCESS — NULLWARD DATABASE</div>
+    <div class="login-header">// ADMINISTRATIVE ACCESS — SOLVEYRA DATABASE</div>
     <div class="login-prompt">&gt; ENTER PASSPHRASE:</div>
     <div class="login-input-row">
       <input id="login-password-input" class="login-input" type="password" autocomplete="off" spellcheck="false" />
@@ -116,21 +109,9 @@
 <script src="assets/js/github.js"></script>
 <script src="assets/js/auth.js"></script>
 <script src="assets/js/page.js"></script>
-<script src="assets/js/boot.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const alreadyBooted = sessionStorage.getItem('null_booted');
-    if (alreadyBooted) {
-      document.getElementById('boot-overlay').classList.add('hidden');
-      document.getElementById('site-wrapper').classList.add('visible');
-      initSharedUI();
-    } else {
-      runBootSequence(() => {
-        sessionStorage.setItem('null_booted', 'true');
-        document.getElementById('site-wrapper').classList.add('visible');
-        initSharedUI();
-      });
-    }
+    initSharedUI();
   });
 </script>
 </body>

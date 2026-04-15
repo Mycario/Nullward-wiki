@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SOLVEYRA — LORE ARCHIVE</title>
+  <title>SOLVEYRA — SPECIES</title>
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
@@ -24,24 +24,24 @@
   <nav id="site-nav">
     <a class="nav-link" href="index.html">// HOME</a>
     <a class="nav-link" href="overview.html">// OVERVIEW</a>
-    <a class="nav-link active" href="lore.html">// LORE</a>
+    <a class="nav-link" href="lore.html">// LORE</a>
     <a class="nav-link" href="technology.html">// TECHNOLOGY</a>
-    <a class="nav-link" href="species.html">// SPECIES</a>
+    <a class="nav-link active" href="species.html">// SPECIES</a>
   </nav>
 
   <main id="main-content">
 
     <div class="editor-bar" id="editor-bar">
       <span class="editor-bar-label">// EDITOR MODE ACTIVE</span>
-      <button class="add-entry-btn" id="lore-add-btn">+ ADD ENTRY</button>
+      <button class="add-entry-btn" id="species-add-btn">+ ADD ENTRY</button>
     </div>
 
     <div class="sidebar-layout">
-      <div class="sidebar" id="lore-sidebar">
-        <div class="sidebar-header">// LORE INDEX</div>
+      <div class="sidebar" id="species-sidebar">
+        <div class="sidebar-header">// SPECIES INDEX</div>
         <ul class="sidebar-list"></ul>
       </div>
-      <div class="doc-viewer" id="lore-viewer">
+      <div class="doc-viewer" id="species-viewer">
         <div class="doc-viewer-header">
           <div class="doc-viewer-title">// SELECT AN ENTRY</div>
           <div></div>
@@ -87,11 +87,11 @@
   document.addEventListener('DOMContentLoaded', () => {
     initSharedUI();
     initSidebarPage({
-      sidebarId: 'lore-sidebar',
-      viewerId: 'lore-viewer',
+      sidebarId: 'species-sidebar',
+      viewerId: 'species-viewer',
       editorBarId: 'editor-bar',
-      addBtnId: 'lore-add-btn',
-      dataFile: 'lore.json'
+      addBtnId: 'species-add-btn',
+      dataFile: 'species.json'
     });
   });
 </script>
