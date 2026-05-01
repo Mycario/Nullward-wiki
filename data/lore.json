@@ -1,1 +1,75 @@
-{ "entries": [], "lastUpdated": null }
+{
+  "entries": [
+    {
+      "title": "The Deep Age",
+      "subtitle": "Ancient History",
+      "body": "Velnorcan civilisation began in the Deep layer of Velundra, between 300 and 700km below the surface. Early Velnorca were social hunters who developed cooperative survival strategies, shared territory and communal child rearing, and eventually primitive tool use adapted for underwater use. The lack of land or any natural barriers between groups meant that rather then fragmenting into isolated tribes, Velnorca communities remained intact and gradually merged into a single civilization, although loosely unified. Early governance was informal, built around councils of the many elders, a structure that would later evolve into the modern system.",
+      "image": "",
+      "imageCaption": "",
+      "infoboxTitle": "",
+      "infoboxRows": [],
+      "timestamp": "2026-04-28T04:49:14.091Z"
+    },
+    {
+      "title": "The Age of Ascent",
+      "subtitle": "Several Centuries before the Era of Light",
+      "body": "As Velnorcan civilization grew so did their need for resources and space, thus they expanded into the Surface layer, such expansion came to be a great boon as the relative abundance of life in the Surface layer provided new food and materials, alongside this the discovery of an atmosphere above the water caused many to ponder the nature of their world.\n\nEarly explorers of the above water were the ones who documented the moons, Var and Mar, and later the sun, Varn. The first above-water constructions, early observation platforms, were built in this era however energy remained a problem, Velnorcan civilization was advanced but no scalable option was available beyond tidal and biological methods.",
+      "image": "",
+      "imageCaption": "",
+      "infoboxTitle": "",
+      "infoboxRows": [],
+      "timestamp": "2026-04-29T03:47:18.225Z"
+    },
+    {
+      "title": "The Age of Light",
+      "subtitle": "300 Years before present",
+      "body": "The most defining point in Solveyran history. Abyss layer excavation drones, at this point a well developed technology, began returning samples from the Abyss containing trace amounts of an unknown material. These were the first discovered Elenraic crystals. Tests done on them discovered their unusual interaction with energy, when energy is focused at a crystal it has the ability to both conduct it but also wirelessly transmit it to a targeted crystal within a 1km radius in a manner similar to resonant energy transfer. This proved to be a great boon to Solveyra and a project was completely undergone to overhaul the energy network of the nation, making great use of Elenraic crystals with the entire network being based around wireless energy. Shortly after an even greater project was undertaken, a dyson swarm, a unified national effort to harvest energy directly from Varn and deliver it back to the surface via large collection towers, structures that remain the most visible above-water construction from Solveyra. Now, energy scarcity, something that had been a major issue throughout Solveyra's history, was effectively ended.",
+      "image": "",
+      "imageCaption": "",
+      "infoboxTitle": "",
+      "infoboxRows": [],
+      "timestamp": "2026-04-30T04:07:31.242Z"
+    },
+    {
+      "title": "The Swarm Age",
+      "subtitle": "280-100 years before present",
+      "body": "With a capable energy network available Solveyra entered a period of rapid scientific and infrastructural expansion. The Dyson Swarm was constructed gradually over roughly 2 centuries, temporary construction drones launched from the energy towers assembled the initial components, which were then used to power further construction in a self sustaining loop. Cities deepened into the Abyss for the first time, using pressurized energy systems to maintain livable environments at the extreme depths. Long range drones were launched to survey other bodies within the Varn system, such as Val-86, a gas giant, the rocky inner bodies Nar-54 and Nar-55 and the distant ice world Gar-84. No Velnorca traveled to these bodies themselves as all exploration was done via drones. Whilst the universe beyond their system remained a scientific mystery with the prevailing view being that Velundra was unique and that life in the universe was likely a singular occurrence, after all, what species could survive without such depths?",
+      "image": "",
+      "imageCaption": "",
+      "infoboxTitle": "",
+      "infoboxRows": [],
+      "timestamp": "2026-05-01T06:47:04.543Z"
+    },
+    {
+      "title": "The Breakthrough",
+      "subtitle": "FTL discovery - 30 years before present",
+      "body": "Researchers studying the upper limits of Elenaric Crystal energy focusing, attempting to determine wherever sufficiently concentrated crystal-transmitted energy could be used for large scale propulsion, conducted an experiment in which a massive array of crystals focused a large amount of energy at a probe in low orbit. The probe was not expected to survive, but before disintegrating telemetry data confirmed it had briefly exceeded the speed of light. The result was initially considered just an error, it wasn't. Further experimentation confirmed that the crystals, when used in a sufficient quantity and focus, allowed objects to exceed break relativistic constraints and exceed the speed of light. This mechanism is not fully understood, even today, but what followed was a generation of engineering work to develop a survivable version of the effect. The first practical application was an uncrewed drone, launched towards the nearest system. It arrived and confirmed via a contact return via signal. Solveyra had, entirely by accident, discovered FTL, however no Velnorca has traveled FTL with drones being the primary method used currently.",
+      "image": "",
+      "imageCaption": "",
+      "infoboxTitle": "",
+      "infoboxRows": [],
+      "timestamp": "2026-05-01T06:57:37.725Z"
+    },
+    {
+      "title": "Present day",
+      "subtitle": "Current",
+      "body": "Solveyra today is a nation in a state of transition. The discovery of FTL has not yet reshaped daily life, though most Velnorca are aware of it in the way one is aware of a scientific achievement, not as something that has changed the world. The council is deliberating on the scope and pace of further interstellar exploration. There is no military to project power, no colonial ambition, and no reason to rush. The prevailing belief remains that the universe is empty, with the drones arrival in a neighboring system showing no signs of intelligent life.",
+      "image": "",
+      "imageCaption": "",
+      "infoboxTitle": "",
+      "infoboxRows": [],
+      "timestamp": "2026-05-01T06:59:47.930Z"
+    },
+    {
+      "title": "Elenaric Crystals",
+      "subtitle": "Discovery and Properties",
+      "body": "Elenaric Crystals are a yellow mineral formation found most commonly in the Abyss layer, however they are rarely found in the Deep layer. They are formed under conditions of extreme pressure over geological time frames. They emit a faint ambient light. Their most significant property is their capacity for resonant energy transmission. When exposed to a focused energy input they can wirelessly transmit it to nearby crystals in a 1km radius, acting like a natural way to Nikolas Tesla's wireless energy transfer systems. This property makes them so important in Solveyran energy infrastructure. A secondary property, discovered much later, is how they interact with high intensity focused energy, which allows for FTL travel.",
+      "image": "",
+      "imageCaption": "",
+      "infoboxTitle": "",
+      "infoboxRows": [],
+      "timestamp": "2026-05-01T07:03:22.981Z"
+    }
+  ],
+  "lastUpdated": "2026-05-01T07:03:22.981Z"
+}
