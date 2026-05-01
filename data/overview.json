@@ -4,21 +4,23 @@
       "title": "Overview of Varn",
       "subtitle": "System",
       "body": "Solveyra is an aquatic nation on the planet Velundra, within the Varn star system.\n\nVelundra is an ocean world, with it's mass being 40% water, it orbits a red dwarf with an orbital period of 30 days. Velundra's size is large, with it being 9 times the size of earth (See K2-18b for a more accurate description)\n\nVarn is a red dwarf star with 5 orbiting bodies, Velundra, the only planet within it's habitable zone, Val-86, a gas giant, roughly the size of Jupiter, Nar-54 and Nar-55, 2 rocky moon planets orbiting close to Varn, and Gar-84, an ice planet furthest from Varn.\n\nVelundra itself has 2 moons, Mar, and Var, these moons are rather large at twice the size of Earth's moon, although their effect on the planet is limited due to the lack of land masses on the surface.",
-      "image": "",
+      "image": "https://files.catbox.moe/e9exq3.png",
       "imageCaption": "",
       "infoboxTitle": "",
       "infoboxRows": [],
-      "timestamp": "2026-04-19T18:00:40.120Z"
+      "timestamp": "2026-04-19T18:00:40.120Z",
+      "tags": []
     },
     {
       "title": "Solveyra Overview",
       "subtitle": "Nation",
-      "body": "Solveyra itself is a nation that is largely unadvanced in the forms of interstellar travel, with FTL only recently being invented, however they have undergone quite a few large scale engineering projects, such as their dyson swarm with allows them to have an easy access to energy from Varn, the energy collected is then sent back and harvested by one of the few above water structures built by Solveyra, those being large energy collection towers with 90% of their actual structure being underwater in order to send the energy back to civilization.\n\nThe bulk of Solveyra is underwater, with their cities design being that similar to Eclipse punk (Search it up, I ain't explaining it), with the nation itself being ran by a democratically elected council and stretching deep into the abyss of Velundra.\n\nSolveyra's tech itself is rather limited, as stated before FTL was only recently invented, however where they specialize is energy, primarily due to kinetics being rather difficult to use due to the water and low gravity of the planet, with most of their machinery, weaponry, and day to day life being aided significantly by the use of powerful focused beams of energy powered by their star.\n\nHowever Solveyra lacks a standing military, due to their history being one of peace they never saw reason to create one, with the closest one being a standard police force that's mostly demilitarized, and they see no reason to build a military either due to the thinking that the universe is, empty.",
+      "body": "Solveyra itself is a nation that is largely unadvanced in the forms of interstellar travel, with FTL only recently being invented, however they have undergone quite a few large scale engineering projects, such as their dyson swarm with allows them to have an easy access to energy from Varn, the energy collected is then sent back and harvested by one of the few above water structures built by Solveyra, those being large energy collection towers with 90% of their actual structure being underwater in order to send the energy back to civilization.\n\nThe bulk of Solveyra is underwater, with their cities design being that similar to Eclipse punk (Search it up, I ain't explaining it), with the nation itself being ran by a democratically elected council and stretching deep into the abyss of Velundra.\n\nSolveyra's tech itself is rather limited, as stated before FTL was only recently invented, however where they specialize is energy, primarily due to kinetics being rather difficult to use due to the water and low gravity of the planet, with most of their machinery, weaponry, and day to day life being aided significantly by the use of powerful focused beams of energy powered by their star.\n\nHowever Solveyra lacks a standing military, due to their history being one of peace they never saw reason to create one, with the closest one being a standard police force that's mostly demilitarized, and they see no reason to build a military either due to the thinking that the universe is, empty.\n\nSolveyra's population is 80 billion.",
       "image": "",
       "imageCaption": "",
       "infoboxTitle": "",
       "infoboxRows": [],
-      "timestamp": "2026-04-19T18:12:10.949Z"
+      "timestamp": "2026-04-19T18:12:10.949Z",
+      "tags": []
     },
     {
       "title": "Overview of Solveyra's Government",
@@ -41,5 +43,5 @@
       "timestamp": "2026-04-26T01:27:43.965Z"
     }
   ],
-  "lastUpdated": "2026-04-27T04:56:03.217Z"
+  "lastUpdated": "2026-05-01T07:38:28.714Z"
 }
