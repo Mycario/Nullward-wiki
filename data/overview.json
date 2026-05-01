@@ -13,14 +13,16 @@
     },
     {
       "title": "Solveyra Overview",
-      "subtitle": "Nation",
+      "subtitle": "",
       "body": "Solveyra itself is a nation that is largely unadvanced in the forms of interstellar travel, with FTL only recently being invented, however they have undergone quite a few large scale engineering projects, such as their dyson swarm with allows them to have an easy access to energy from Varn, the energy collected is then sent back and harvested by one of the few above water structures built by Solveyra, those being large energy collection towers with 90% of their actual structure being underwater in order to send the energy back to civilization.\n\nThe bulk of Solveyra is underwater, with their cities design being that similar to Eclipse punk (Search it up, I ain't explaining it), with the nation itself being ran by a democratically elected council and stretching deep into the abyss of Velundra.\n\nSolveyra's tech itself is rather limited, as stated before FTL was only recently invented, however where they specialize is energy, primarily due to kinetics being rather difficult to use due to the water and low gravity of the planet, with most of their machinery, weaponry, and day to day life being aided significantly by the use of powerful focused beams of energy powered by their star.\n\nHowever Solveyra lacks a standing military, due to their history being one of peace they never saw reason to create one, with the closest one being a standard police force that's mostly demilitarized, and they see no reason to build a military either due to the thinking that the universe is, empty.\n\nSolveyra's population is 80 billion.",
       "image": "",
       "imageCaption": "",
       "infoboxTitle": "",
       "infoboxRows": [],
       "timestamp": "2026-04-19T18:12:10.949Z",
-      "tags": []
+      "tags": [
+        "Nation"
+      ]
     },
     {
       "title": "Overview of Solveyra's Government",
@@ -50,5 +52,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-05-01T08:44:39.881Z"
+  "lastUpdated": "2026-05-01T08:44:49.140Z"
 }
