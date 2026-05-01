@@ -31,6 +31,7 @@ function logout() {
   sessionStorage.removeItem('solv_auth');
   document.body.classList.remove('editor-active');
   document.querySelectorAll('.editor-bar').forEach(b => b.classList.remove('visible'));
+  if (typeof SFX !== 'undefined') SFX.logout();
   updateLoginTrigger();
   document.dispatchEvent(new CustomEvent('editorStateChange', { detail: { loggedIn: false } }));
 }
@@ -83,9 +84,11 @@ async function initAuth() {
       input.value = '';
       if (errorMsg) errorMsg.classList.remove('visible');
       updateLoginTrigger();
+      if (typeof SFX !== 'undefined') SFX.loginSuccess();
       document.dispatchEvent(new CustomEvent('editorStateChange', { detail: { loggedIn: true } }));
       if (typeof initConfigPanel === 'function') initConfigPanel();
     } else {
+      if (typeof SFX !== 'undefined') SFX.error();
       if (errorMsg) { errorMsg.textContent = '// ACCESS DENIED — INVALID CREDENTIALS'; errorMsg.classList.add('visible'); }
       input.value = '';
       input.classList.add('shake');
