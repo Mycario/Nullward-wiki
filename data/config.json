@@ -1,5 +1,5 @@
 {
-  "passwordHash": "9a226f48da3e2c2880396692d3f18beabac1c4037e8d87d7917c5bab665d0a3d",
+  "passwordHash": null,
   "passwordSalt": "solv-wiki-salt-2025",
   "_instructions": {
     "description": "Auth configuration for Solveyra wiki. Password stored as SHA256 hash for security.",
