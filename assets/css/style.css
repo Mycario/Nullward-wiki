@@ -114,29 +114,140 @@ body::after {
 .search-result-tag { font-size: 0.55rem; color: var(--text-dim); border: 1px solid var(--border); padding: 1px 4px; letter-spacing: 0.08em; text-transform: uppercase; }
 
 /* ─── TAG FILTER BAR ─── */
-.tag-filter-bar { background: var(--deep); border: 1px solid var(--border); border-bottom: none; padding: 0.75rem 1rem; display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
-.tag-filter-label { font-family: var(--font-display); font-size: 0.6rem; color: var(--text-dim); letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap; margin-right: 0.25rem; }
-.tag-filter-btn { background: transparent; border: 1px solid var(--border); color: var(--text-mid); font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.65rem; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
-.tag-filter-btn:hover { border-color: var(--teal-mid); color: var(--text-bright); }
-.tag-filter-btn.active { background: var(--teal-dim); border-color: var(--teal-hot); color: var(--teal-hot); box-shadow: 0 0 6px var(--teal-glow); }
-.tag-filter-btn.all-btn.active { background: var(--teal-dim); border-color: var(--teal-bright); color: var(--teal-bright); }
-.tag-filter-divider { width: 1px; height: 16px; background: var(--border); margin: 0 0.1rem; flex-shrink: 0; }
-.tag-custom-input { background: var(--black); border: 1px dashed var(--border); color: var(--text-bright); font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.65rem; outline: none; width: 110px; transition: border-color 0.2s; }
-.tag-custom-input::placeholder { color: var(--text-dim); text-transform: uppercase; font-size: 0.6rem; }
-.tag-custom-input:focus { border-color: var(--teal-mid); }
-.tag-custom-add { background: transparent; border: 1px dashed var(--teal-mid); color: var(--teal-mid); font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.55rem; cursor: pointer; transition: all 0.15s; }
-.tag-custom-add:hover { border-color: var(--teal-bright); color: var(--teal-bright); }
+.tag-filter-bar {
+  background: var(--deep);
+  border: 1px solid var(--border);
+  border-bottom: none;
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tag-filter-label {
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  margin-right: 0.25rem;
+}
+.tag-filter-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-mid);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.65rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.tag-filter-btn:hover {
+  border-color: var(--teal-mid);
+  color: var(--text-bright);
+}
+.tag-filter-btn.active {
+  background: var(--teal-dim);
+  border-color: var(--teal-hot);
+  color: var(--teal-hot);
+  box-shadow: 0 0 6px var(--teal-glow);
+}
+.tag-filter-btn.all-btn.active {
+  background: var(--teal-dim);
+  border-color: var(--teal-bright);
+  color: var(--teal-bright);
+}
+.tag-filter-divider {
+  width: 1px;
+  height: 16px;
+  background: var(--border);
+  margin: 0 0.1rem;
+  flex-shrink: 0;
+}
+.tag-custom-input {
+  background: var(--black);
+  border: 1px dashed var(--border);
+  color: var(--text-bright);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.65rem;
+  outline: none;
+  width: 110px;
+  transition: border-color 0.2s;
+}
+.tag-custom-input::placeholder {
+  color: var(--text-dim);
+  text-transform: uppercase;
+  font-size: 0.6rem;
+}
+.tag-custom-input:focus {
+  border-color: var(--teal-mid);
+}
+.tag-custom-add {
+  background: transparent;
+  border: 1px dashed var(--teal-mid);
+  color: var(--teal-mid);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.55rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.tag-custom-add:hover {
+  border-color: var(--teal-bright);
+  color: var(--teal-bright);
+}
 
 /* ─── TAG CHIPS in sidebar entries ─── */
-.sidebar-entry-tags { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 3px; }
-.sidebar-tag-chip { font-size: 0.55rem; color: var(--text-dim); border: 1px solid var(--border); padding: 1px 5px; letter-spacing: 0.08em; text-transform: uppercase; }
+.sidebar-entry-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-top: 3px;
+}
+.sidebar-tag-chip {
+  font-size: 0.55rem;
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  padding: 1px 5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
 
 /* ─── TAG CHIPS in viewer ─── */
-.viewer-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
-.viewer-tag-chip { font-size: 0.6rem; color: var(--teal-bright); border: 1px solid var(--teal-mid); background: var(--teal-dim); padding: 2px 7px; letter-spacing: 0.1em; text-transform: uppercase; }
+.viewer-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 6px;
+}
+.viewer-tag-chip {
+  font-size: 0.6rem;
+  color: var(--teal-bright);
+  border: 1px solid var(--teal-mid);
+  background: var(--teal-dim);
+  padding: 2px 7px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
 
 /* ─── SIDEBAR count indicator ─── */
-.sidebar-count { font-family: var(--font-terminal); font-size: 0.8rem; color: var(--text-dim); padding: 0.4rem 1.2rem; border-bottom: 1px solid var(--border); letter-spacing: 0.1em; }
+.sidebar-count {
+  font-family: var(--font-terminal);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  padding: 0.4rem 1.2rem;
+  border-bottom: 1px solid var(--border);
+  letter-spacing: 0.1em;
+}
 
 /* ─── MAIN ─── */
 #main-content { flex: 1; padding: 2rem; max-width: 1400px; width: 100%; margin: 0 auto; }
