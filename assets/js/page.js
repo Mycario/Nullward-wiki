@@ -88,30 +88,107 @@ function initSidebarPage(config) {
   // ── Tag filter bar init ──
   const filterBar = tagFilterBarId ? document.getElementById(tagFilterBarId) : null;
   const presetsContainer = filterBar ? document.getElementById('tag-filter-presets') : null;
+  let filterExpanded = false;
+
+  // Build the toggle button and expandable tag area into the bar
+  if (filterBar) {
+    // Replace bar contents with controlled layout
+    filterBar.innerHTML = `
+      <span class="tag-filter-label">// FILTER:</span>
+      <button class="tag-filter-btn all-btn active" id="tag-all-btn" data-tag="__all__">ALL</button>
+      <button class="tag-filter-btn" id="tag-toggle-btn" style="border-style:dashed;margin-left:2px;">▼ SHOW TAGS</button>
+      <span id="tag-active-indicator" style="font-family:var(--font-terminal);font-size:0.8rem;color:var(--teal-hot);letter-spacing:0.1em;display:none;"></span>
+      <div id="tag-expanded-area" style="display:none;width:100%;margin-top:0.5rem;display:none;flex-wrap:wrap;gap:0.4rem;align-items:center;">
+        <div id="tag-filter-presets" style="display:contents"></div>
+        <div class="tag-filter-divider" id="tag-editor-divider" style="display:none"></div>
+        <input class="tag-custom-input" id="tag-custom-input" type="text" placeholder="NEW TAG..." maxlength="24" style="display:none;" />
+        <button class="tag-custom-add" id="tag-custom-add-btn" style="display:none;">+ ADD</button>
+      </div>
+    `;
+  }
+
+  const tagExpandedArea = document.getElementById('tag-expanded-area');
+  const tagToggleBtn = document.getElementById('tag-toggle-btn');
+  const tagActiveIndicator = document.getElementById('tag-active-indicator');
+
+  if (tagToggleBtn) {
+    tagToggleBtn.addEventListener('click', () => {
+      filterExpanded = !filterExpanded;
+      tagExpandedArea.style.display = filterExpanded ? 'flex' : 'none';
+      tagToggleBtn.textContent = filterExpanded ? '▲ HIDE TAGS' : '▼ SHOW TAGS';
+    });
+  }
+
+  const allBtnEl = document.getElementById('tag-all-btn');
+  if (allBtnEl) allBtnEl.addEventListener('click', () => setActiveTag('__all__'));
+
+  function updateEditorTagControls() {
+    const editorDiv = document.getElementById('tag-editor-divider');
+    const customInput = document.getElementById('tag-custom-input');
+    const customAddBtn = document.getElementById('tag-custom-add-btn');
+    const show = isLoggedIn();
+    if (editorDiv) editorDiv.style.display = show ? 'block' : 'none';
+    if (customInput) customInput.style.display = show ? '' : 'none';
+    if (customAddBtn) customAddBtn.style.display = show ? '' : 'none';
+  }
 
   function renderTagFilterBar() {
-    if (!filterBar || !presetsContainer) return;
+    const presetsEl = document.getElementById('tag-filter-presets');
+    if (!presetsEl) return;
 
-    presetsContainer.innerHTML = '';
+    presetsEl.innerHTML = '';
 
-    // All tags = presets + custom + any tags found in entries not already listed
     const entryTags = new Set();
     currentData.entries.forEach(e => (e.tags || []).forEach(t => entryTags.add(t)));
-
     const allTags = [...new Set([...PRESET_TAGS, ...customTags, ...entryTags])];
 
     allTags.forEach(tag => {
+      const isCustom = !PRESET_TAGS.includes(tag);
+      const wrap = document.createElement('span');
+      wrap.style.cssText = 'display:inline-flex;align-items:center;gap:2px;';
+
       const btn = document.createElement('button');
       btn.className = 'tag-filter-btn' + (activeTag === tag ? ' active' : '');
       btn.dataset.tag = tag;
       btn.textContent = tag.toUpperCase();
       btn.addEventListener('click', () => setActiveTag(tag));
-      presetsContainer.appendChild(btn);
+      wrap.appendChild(btn);
+
+      // Delete button for custom tags — only visible in editor mode
+      if (isCustom) {
+        const del = document.createElement('button');
+        del.className = 'tag-filter-btn';
+        del.title = `Remove tag "${tag}"`;
+        del.textContent = '×';
+        del.style.cssText = 'padding:0.25rem 0.4rem;border-color:#662200;color:#aa4400;display:' + (isLoggedIn() ? 'inline-block' : 'none');
+        del.id = `tag-del-${tag}`;
+        del.addEventListener('click', (e) => {
+          e.stopPropagation();
+          customTags = customTags.filter(t => t !== tag);
+          saveCustomTags();
+          if (activeTag === tag) setActiveTag('__all__');
+          else renderTagFilterBar();
+        });
+        wrap.appendChild(del);
+      }
+
+      presetsEl.appendChild(wrap);
     });
 
-    // Update ALL button state
-    const allBtn = filterBar.querySelector('.all-btn');
-    if (allBtn) allBtn.classList.toggle('active', activeTag === '__all__');
+    // ALL button state
+    if (allBtnEl) allBtnEl.classList.toggle('active', activeTag === '__all__');
+
+    // Active tag indicator (shown in collapsed state)
+    if (tagActiveIndicator) {
+      if (activeTag !== '__all__') {
+        tagActiveIndicator.textContent = `— ${activeTag.toUpperCase()}`;
+        tagActiveIndicator.style.display = '';
+      } else {
+        tagActiveIndicator.style.display = 'none';
+      }
+    }
+
+    updateEditorTagControls();
   }
 
   function setActiveTag(tag) {
@@ -120,31 +197,25 @@ function initSidebarPage(config) {
     renderSidebar();
   }
 
-  // ALL button
-  if (filterBar) {
-    const allBtn = filterBar.querySelector('.all-btn');
-    if (allBtn) allBtn.addEventListener('click', () => setActiveTag('__all__'));
+  // Custom tag add
+  const customInput = document.getElementById('tag-custom-input');
+  const customAddBtn = document.getElementById('tag-custom-add-btn');
 
-    // Custom tag add
-    const customInput = document.getElementById('tag-custom-input');
-    const customAddBtn = document.getElementById('tag-custom-add-btn');
-
-    function addCustomTag() {
-      if (!customInput) return;
-      const val = customInput.value.trim();
-      if (!val) return;
-      const normalised = val.charAt(0).toUpperCase() + val.slice(1).toLowerCase();
-      if (!customTags.includes(normalised) && !PRESET_TAGS.includes(normalised)) {
-        customTags.push(normalised);
-        saveCustomTags();
-      }
-      customInput.value = '';
-      renderTagFilterBar();
+  function addCustomTag() {
+    if (!customInput) return;
+    const val = customInput.value.trim();
+    if (!val) return;
+    const normalised = val.charAt(0).toUpperCase() + val.slice(1).toLowerCase();
+    if (!customTags.includes(normalised) && !PRESET_TAGS.includes(normalised)) {
+      customTags.push(normalised);
+      saveCustomTags();
     }
-
-    if (customAddBtn) customAddBtn.addEventListener('click', addCustomTag);
-    if (customInput) customInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') addCustomTag(); });
+    customInput.value = '';
+    renderTagFilterBar();
   }
+
+  if (customAddBtn) customAddBtn.addEventListener('click', addCustomTag);
+  if (customInput) customInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') addCustomTag(); });
 
   // ── Load ──
   async function loadEntries() {
@@ -297,6 +368,8 @@ function initSidebarPage(config) {
 
   document.addEventListener('editorStateChange', () => {
     if (activeIndex !== null) showEntry(activeIndex);
+    if (typeof updateEditorTagControls === 'function') updateEditorTagControls();
+    renderTagFilterBar();
   });
 
   loadEntries();
