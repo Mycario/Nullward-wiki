@@ -24,13 +24,17 @@
     },
     {
       "title": "Overview of Solveyra's Government",
-      "subtitle": "Government",
+      "subtitle": "",
       "body": "Solveyra is ruled by a democratically elected council housed within the deepest parts of the nation, they are the primary body that makes decisions for the nation, wherever it be economic, military or scientific they are the ones who call the shots.\n\nThe council itself is that of 8 members, with none of them being specified to a specific group of actions, they all make decisions on everything, this does come at the cost of decisions being rather slow, especially due to the system of a decision needing to be written, proposed, voted and then passed, but it comes at the great benefit of corruption and bribery being near 0.\n\nElections occur every 10 years, or for Solveyra, every 1 year, with a year being market by an election cycle, however it isn't the typical election with politicians, instead random civilians are selected, voted on by their fellow citizens and 8 are picked out from a selection that can include millions, the entire voting process can take years all together.",
       "image": "",
       "imageCaption": "",
       "infoboxTitle": "",
       "infoboxRows": [],
-      "timestamp": "2026-04-20T07:11:06.458Z"
+      "timestamp": "2026-04-20T07:11:06.458Z",
+      "tags": [
+        "Government",
+        "Nation"
+      ]
     },
     {
       "title": "Velundra",
@@ -46,5 +50,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-05-01T08:44:10.758Z"
+  "lastUpdated": "2026-05-01T08:44:39.881Z"
 }
