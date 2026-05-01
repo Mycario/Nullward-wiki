@@ -744,8 +744,7 @@ function initSharedUI() {
     loadGithubConfig();
     initConfigPanel();
   });
-
-
+  
   // Load all data files once
   Promise.all(dataFiles.map(file => loadData(file).then(d => ({ file, data: d.content })))).then(results => {
     results.forEach(({ file, data }) => {
