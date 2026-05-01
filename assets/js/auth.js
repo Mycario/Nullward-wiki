@@ -25,7 +25,6 @@ async function initCorrectHash() {
     if (authConfig && authConfig.passwordHash) {
       sessionStorage.setItem('solv_correct', authConfig.passwordHash);
     } else {
-      // Fallback: hash 'Solveyra' with no salt (backward compatible)
       const h = await hashPassword('Solveyra');
       sessionStorage.setItem('solv_correct', h);
       authConfig = { passwordHash: h, passwordSalt: '' };
