@@ -27,7 +27,7 @@ async function initCorrectHash() {
     } else {
       const h = await hashPassword('Solveyra');
       sessionStorage.setItem('solv_correct', h);
-      authConfig = { passwordHash: h, passwordSalt: '' };
+      authConfig = { passwordHash: h, passwordSalt: 'solv-wiki-salt-2025' };
     }
   }
 }
