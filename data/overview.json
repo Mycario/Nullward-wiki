@@ -62,9 +62,11 @@
       "imageCaption": "",
       "infoboxTitle": "",
       "infoboxRows": [],
-      "tags": [],
+      "tags": [
+        "Technology"
+      ],
       "timestamp": "2026-05-08T14:00:37.131Z"
     }
   ],
-  "lastUpdated": "2026-05-10T12:22:50.510Z"
+  "lastUpdated": "2026-05-10T12:25:44.936Z"
 }
