@@ -509,6 +509,7 @@ function initSidebarPage(config) {
           currentData.entries.push({ ...entryData, timestamp: new Date().toISOString() });
         }
         const result = await saveEntry(dataFile, currentData.entries, currentData.sha);
+        // Update SHA from successful save response (don't re-fetch due to GitHub API consistency lag)
         currentData.sha = result?.content?.sha || currentData.sha;
         activeIndex = editIdx !== null ? editIdx : currentData.entries.length - 1;
         renderTagFilterBar();
