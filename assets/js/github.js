@@ -56,16 +56,30 @@ async function saveEntry(filename, entries, sha) {
   loadGithubConfig();
   if (!window.GITHUB_OWNER || !window.GITHUB_TOKEN) throw new Error('GitHub not configured. Enter credentials on the home page.');
   
-  // Fetch the latest SHA to avoid conflicts
-  try {
-    const result = await githubGetFile(`data/${filename}`);
-    if (result) sha = result.sha;
-  } catch (e) {
-    console.warn('Could not fetch latest SHA, using provided one:', e);
-  }
-  
   const content = { entries, lastUpdated: new Date().toISOString() };
-  return await githubSaveFile(`data/${filename}`, content, sha, `Update ${filename}`);
+  
+  // Retry logic: if we get a conflict, fetch latest and try again
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      // Always fetch the latest SHA right before saving
+      const result = await githubGetFile(`data/${filename}`);
+      if (result) sha = result.sha;
+      
+      return await githubSaveFile(`data/${filename}`, content, sha, `Update ${filename}`);
+    } catch (e) {
+      const errorMsg = e.message || '';
+      
+      // If it's a SHA mismatch error and we have retries left, try again
+      if (errorMsg.includes('does not match') && attempt < 2) {
+        console.warn(`SHA mismatch on attempt ${attempt + 1}, retrying...`, e);
+        await new Promise(resolve => setTimeout(resolve, 500 + Math.random() * 500));
+        continue;
+      }
+      
+      // Otherwise throw the error
+      throw e;
+    }
+  }
 }
 
 function initConfigPanel() {
