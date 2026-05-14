@@ -1,5 +1,4 @@
 // ─── AUDIO ENGINE ────────────────────────────────────────────────────────────
-// All sounds generated via Web Audio API — no external files needed.
 
 const SFX = (() => {
   let ctx = null;
@@ -9,83 +8,58 @@ const SFX = (() => {
     return ctx;
   }
 
-  // Core tone generator
   function tone({ freq = 440, freq2 = null, type = 'sine', gain = 0.15, attack = 0.01, sustain = 0.08, release = 0.12, delay = 0 } = {}) {
     try {
       const ac = getCtx();
       const t = ac.currentTime + delay;
-
       const osc = ac.createOscillator();
       const gainNode = ac.createGain();
-
       osc.connect(gainNode);
       gainNode.connect(ac.destination);
-
       osc.type = type;
       osc.frequency.setValueAtTime(freq, t);
       if (freq2) osc.frequency.linearRampToValueAtTime(freq2, t + attack + sustain);
-
       gainNode.gain.setValueAtTime(0, t);
       gainNode.gain.linearRampToValueAtTime(gain, t + attack);
       gainNode.gain.setValueAtTime(gain, t + attack + sustain);
       gainNode.gain.linearRampToValueAtTime(0, t + attack + sustain + release);
-
       osc.start(t);
       osc.stop(t + attack + sustain + release + 0.01);
-    } catch(e) { /* silently fail if audio unavailable */ }
+    } catch(e) {}
   }
 
   return {
-    // Soft click — nav links, sidebar buttons
     click() {
       tone({ freq: 880, freq2: 660, type: 'sine', gain: 0.08, attack: 0.005, sustain: 0.02, release: 0.06 });
     },
-
-    // Entry open — selecting a doc
     open() {
       tone({ freq: 520, type: 'sine', gain: 0.1, attack: 0.01, sustain: 0.05, release: 0.15 });
       tone({ freq: 780, type: 'sine', gain: 0.06, attack: 0.01, sustain: 0.03, release: 0.1, delay: 0.04 });
     },
-
-    // Form open
     formOpen() {
       tone({ freq: 440, freq2: 600, type: 'sine', gain: 0.1, attack: 0.01, sustain: 0.08, release: 0.18 });
     },
-
-    // Form close / cancel
     formClose() {
       tone({ freq: 500, freq2: 340, type: 'sine', gain: 0.08, attack: 0.01, sustain: 0.05, release: 0.12 });
     },
-
-    // Save success — bright confirmation
     success() {
       tone({ freq: 660, type: 'sine', gain: 0.1, attack: 0.01, sustain: 0.06, release: 0.1 });
       tone({ freq: 880, type: 'sine', gain: 0.08, attack: 0.01, sustain: 0.06, release: 0.12, delay: 0.08 });
       tone({ freq: 1100, type: 'sine', gain: 0.06, attack: 0.01, sustain: 0.08, release: 0.15, delay: 0.16 });
     },
-
-    // Error / login fail — descending harsh buzz
     error() {
       tone({ freq: 300, freq2: 180, type: 'sawtooth', gain: 0.12, attack: 0.005, sustain: 0.1, release: 0.15 });
     },
-
-    // Login success
     loginSuccess() {
       tone({ freq: 480, type: 'sine', gain: 0.1, attack: 0.01, sustain: 0.05, release: 0.1 });
       tone({ freq: 720, type: 'sine', gain: 0.08, attack: 0.01, sustain: 0.08, release: 0.15, delay: 0.07 });
     },
-
-    // Logout
     logout() {
       tone({ freq: 600, freq2: 360, type: 'sine', gain: 0.09, attack: 0.01, sustain: 0.1, release: 0.2 });
     },
-
-    // Tag filter click
     filter() {
       tone({ freq: 740, type: 'sine', gain: 0.07, attack: 0.005, sustain: 0.02, release: 0.08 });
     },
-
-    // Delete — low warning thud
     del() {
       tone({ freq: 200, freq2: 140, type: 'triangle', gain: 0.12, attack: 0.005, sustain: 0.06, release: 0.18 });
     }
@@ -158,43 +132,33 @@ function initSidebarPage(config) {
 
   const sidebar = document.getElementById(sidebarId);
   const viewer = document.getElementById(viewerId);
-  const editorBar = document.getElementById(editorBarId);
   const addBtn = document.getElementById(addBtnId);
   const sidebarCount = sidebarCountId ? document.getElementById(sidebarCountId) : null;
 
   let currentData = { entries: [], sha: null };
-  let activeIndex = null; // index into currentData.entries
+  let activeIndex = null;
   let activeTag = '__all__';
 
-  // ── Preset tags (technology page only) ──
-  const PRESET_TAGS = dataFile === 'technology.json' ? ['Infrastructure', 'Energy', 'Weapon', 'Drone', 'Transport', 'Computing', 'FTL'] : [];
+  const PRESET_TAGS = dataFile === 'technology.json'
+    ? ['Infrastructure', 'Energy', 'Weapon', 'Drone', 'Transport', 'Computing', 'FTL']
+    : [];
 
-  // ── Custom tags (persisted in localStorage) ──
-  // Technology uses 'solv_custom_tags_tech'; other pages use shared 'solv_custom_tags_global'
-  const customTagsKey = dataFile === 'technology.json' ? 'solv_custom_tags_tech' : 'solv_custom_tags_global';
+  const customTagsKey = dataFile === 'technology.json' ? 'solv_custom_tags_tech' : `solv_custom_tags_${dataFile}`;
   let customTags = [];
-  try {
-    customTags = JSON.parse(localStorage.getItem(customTagsKey) || '[]');
-  } catch(e) { customTags = []; }
+  try { customTags = JSON.parse(localStorage.getItem(customTagsKey) || '[]'); } catch(e) { customTags = []; }
+  function saveCustomTags() { localStorage.setItem(customTagsKey, JSON.stringify(customTags)); }
 
-  function saveCustomTags() {
-    localStorage.setItem(customTagsKey, JSON.stringify(customTags));
-  }
-
-  // ── Tag filter bar init ──
+  // ── Tag filter bar ──
   const filterBar = tagFilterBarId ? document.getElementById(tagFilterBarId) : null;
-  const presetsContainer = filterBar ? document.getElementById('tag-filter-presets') : null;
   let filterExpanded = false;
 
-  // Build the toggle button and expandable tag area into the bar
   if (filterBar) {
-    // Replace bar contents with controlled layout
     filterBar.innerHTML = `
       <span class="tag-filter-label">// FILTER:</span>
       <button class="tag-filter-btn all-btn active" id="tag-all-btn" data-tag="__all__">ALL</button>
       <button class="tag-filter-btn" id="tag-toggle-btn" style="border-style:dashed;margin-left:2px;">▼ SHOW TAGS</button>
       <span id="tag-active-indicator" style="font-family:var(--font-terminal);font-size:0.8rem;color:var(--teal-hot);letter-spacing:0.1em;display:none;"></span>
-      <div id="tag-expanded-area" style="display:none;width:100%;margin-top:0.5rem;display:none;flex-wrap:wrap;gap:0.4rem;align-items:center;">
+      <div id="tag-expanded-area" style="display:none;width:100%;margin-top:0.5rem;flex-wrap:wrap;gap:0.4rem;align-items:center;">
         <div id="tag-filter-presets" style="display:contents"></div>
         <div class="tag-filter-divider" id="tag-editor-divider" style="display:none"></div>
         <input class="tag-custom-input" id="tag-custom-input" type="text" placeholder="NEW TAG..." maxlength="24" style="display:none;" />
@@ -206,6 +170,7 @@ function initSidebarPage(config) {
   const tagExpandedArea = document.getElementById('tag-expanded-area');
   const tagToggleBtn = document.getElementById('tag-toggle-btn');
   const tagActiveIndicator = document.getElementById('tag-active-indicator');
+  const allBtnEl = document.getElementById('tag-all-btn');
 
   if (tagToggleBtn) {
     tagToggleBtn.addEventListener('click', () => {
@@ -216,7 +181,6 @@ function initSidebarPage(config) {
     });
   }
 
-  const allBtnEl = document.getElementById('tag-all-btn');
   if (allBtnEl) allBtnEl.addEventListener('click', () => { SFX.filter(); setActiveTag('__all__'); });
 
   function updateEditorTagControls() {
@@ -232,7 +196,6 @@ function initSidebarPage(config) {
   function renderTagFilterBar() {
     const presetsEl = document.getElementById('tag-filter-presets');
     if (!presetsEl) return;
-
     presetsEl.innerHTML = '';
 
     const entryTags = new Set();
@@ -251,23 +214,12 @@ function initSidebarPage(config) {
       btn.addEventListener('click', () => { SFX.filter(); setActiveTag(tag); });
       wrap.appendChild(btn);
 
-      // Delete button for custom tags — only visible in editor mode
       if (isCustom) {
         const del = document.createElement('button');
         del.className = 'tag-del-btn';
         del.title = `Remove tag "${tag}"`;
         del.textContent = '×';
-        del.style.cssText = `
-          background:none;
-          border:none;
-          color:#aa4400;
-          font-family:var(--font-mono);
-          font-size:0.7rem;
-          cursor:pointer;
-          padding:0 3px;
-          line-height:1;
-          display:${isLoggedIn() ? 'inline-block' : 'none'};
-        `;
+        del.style.cssText = `background:none;border:none;color:#aa4400;font-family:var(--font-mono);font-size:0.7rem;cursor:pointer;padding:0 3px;line-height:1;display:${isLoggedIn() ? 'inline-block' : 'none'};`;
         del.addEventListener('click', (e) => {
           e.stopPropagation();
           SFX.del();
@@ -282,10 +234,8 @@ function initSidebarPage(config) {
       presetsEl.appendChild(wrap);
     });
 
-    // ALL button state
     if (allBtnEl) allBtnEl.classList.toggle('active', activeTag === '__all__');
 
-    // Active tag indicator (shown in collapsed state)
     if (tagActiveIndicator) {
       if (activeTag !== '__all__') {
         tagActiveIndicator.textContent = `— ${activeTag.toUpperCase()}`;
@@ -304,7 +254,6 @@ function initSidebarPage(config) {
     renderSidebar();
   }
 
-  // Custom tag add
   const customInput = document.getElementById('tag-custom-input');
   const customAddBtn = document.getElementById('tag-custom-add-btn');
 
@@ -330,7 +279,6 @@ function initSidebarPage(config) {
     currentData = { entries: result.content.entries || [], sha: result.sha };
     renderTagFilterBar();
     renderSidebar();
-    // Try to restore active entry
     if (activeIndex !== null && activeIndex < currentData.entries.length) {
       showEntry(activeIndex);
     } else if (filteredEntries().length > 0) {
@@ -340,7 +288,6 @@ function initSidebarPage(config) {
     }
   }
 
-  // ── Filter ──
   function filteredEntries() {
     if (activeTag === '__all__') return currentData.entries;
     return currentData.entries.filter(e => (e.tags || []).includes(activeTag));
@@ -370,14 +317,13 @@ function initSidebarPage(config) {
 
       const btn = document.createElement('button');
       btn.className = 'sidebar-btn' + (realIdx === activeIndex ? ' active' : '');
+      btn.style.flexDirection = 'column';
+      btn.style.alignItems = 'flex-start';
 
-      // Title
       const titleSpan = document.createElement('span');
       titleSpan.textContent = entry.title || `Entry ${realIdx + 1}`;
-
       btn.appendChild(titleSpan);
 
-      // Tag chips under title
       if (entry.tags && entry.tags.length > 0) {
         const chipsWrap = document.createElement('div');
         chipsWrap.className = 'sidebar-entry-tags';
@@ -389,9 +335,6 @@ function initSidebarPage(config) {
         });
         btn.appendChild(chipsWrap);
       }
-
-      btn.style.flexDirection = 'column';
-      btn.style.alignItems = 'flex-start';
 
       btn.addEventListener('click', () => { SFX.open(); showEntry(realIdx); });
       li.appendChild(btn);
@@ -405,16 +348,11 @@ function initSidebarPage(config) {
     const entry = currentData.entries[idx];
     if (!entry) return;
 
-    sidebar?.querySelectorAll('.sidebar-btn').forEach((b, i) => {
-      // match by data rather than index since sidebar only shows filtered
-      b.classList.remove('active');
-    });
-    // Re-find the correct sidebar btn
     const list = sidebar?.querySelector('.sidebar-list');
     if (list) {
       list.querySelectorAll('.sidebar-btn').forEach(btn => {
         const titleText = btn.querySelector('span')?.textContent;
-        if (titleText === (entry.title || `Entry ${idx + 1}`)) btn.classList.add('active');
+        btn.classList.toggle('active', titleText === (entry.title || `Entry ${idx + 1}`));
       });
     }
 
@@ -422,7 +360,6 @@ function initSidebarPage(config) {
     const body = viewer?.querySelector('.doc-viewer-body');
     if (!header || !body) return;
 
-    // Tags display in viewer header
     const tagsHtml = (entry.tags && entry.tags.length > 0)
       ? `<div class="viewer-tags">${entry.tags.map(t => `<span class="viewer-tag-chip">${escapeHtml(t)}</span>`).join('')}</div>`
       : '';
@@ -475,7 +412,7 @@ function initSidebarPage(config) {
 
   document.addEventListener('editorStateChange', () => {
     if (activeIndex !== null) showEntry(activeIndex);
-    if (typeof updateEditorTagControls === 'function') updateEditorTagControls();
+    updateEditorTagControls();
     renderTagFilterBar();
   });
 
@@ -484,7 +421,6 @@ function initSidebarPage(config) {
   // ── Form ──
   function openForm(editIdx) {
     const existing = editIdx !== null ? currentData.entries[editIdx] : null;
-    // Build full tag list for the form
     const allAvailableTags = [...new Set([
       ...PRESET_TAGS,
       ...customTags,
@@ -495,7 +431,6 @@ function initSidebarPage(config) {
       existing,
       availableTags: allAvailableTags,
       onSave: async (entryData) => {
-        // Merge any new tags into customTags
         (entryData.tags || []).forEach(t => {
           if (!PRESET_TAGS.includes(t) && !customTags.includes(t)) {
             customTags.push(t);
@@ -509,7 +444,6 @@ function initSidebarPage(config) {
           currentData.entries.push({ ...entryData, timestamp: new Date().toISOString() });
         }
         const result = await saveEntry(dataFile, currentData.entries, currentData.sha);
-        // Update SHA from successful save response (don't re-fetch due to GitHub API consistency lag)
         currentData.sha = result?.content?.sha || currentData.sha;
         activeIndex = editIdx !== null ? editIdx : currentData.entries.length - 1;
         renderTagFilterBar();
@@ -530,7 +464,6 @@ function showEntryForm({ existing, availableTags = [], onSave }) {
   overlay.id = 'entry-form-overlay';
   overlay.className = 'entry-form-overlay open';
 
-  // Build tag selector HTML
   const selectedTags = new Set(existing?.tags || []);
   const allTagsForForm = [...new Set([...availableTags, ...(existing?.tags || [])])];
 
@@ -597,7 +530,7 @@ function showEntryForm({ existing, availableTags = [], onSave }) {
         <div class="form-section-label">INFOBOX <span style="font-size:0.55rem;color:var(--text-dim);font-family:var(--font-mono)">(OPTIONAL — APPEARS AS SIDEBAR TABLE)</span></div>
         <div class="form-field full">
           <label class="form-label">Infobox Title <span class="form-optional">(optional)</span></label>
-          <input class="form-input" id="ef-infobox-title" type="text" placeholder="e.g. Elenaric Crystal" value="${escapeHtml(existing?.infoboxTitle || '')}" />
+          <input class="form-input" id="ef-infobox-title" type="text" placeholder="e.g. Velnorca" value="${escapeHtml(existing?.infoboxTitle || '')}" />
         </div>
         <div class="form-field full" style="margin-top:0.5rem">
           <label class="form-label">Infobox Rows</label>
@@ -618,16 +551,13 @@ function showEntryForm({ existing, availableTags = [], onSave }) {
 
   document.body.appendChild(overlay);
 
-  // Tag toggle logic
   const tagSelector = document.getElementById('ef-tag-selector');
-
   tagSelector.addEventListener('click', (e) => {
     const btn = e.target.closest('.ef-tag-btn');
     if (!btn) return;
     btn.classList.toggle('active');
   });
 
-  // Add new tag to form
   const newTagInput = document.getElementById('ef-new-tag-input');
   const newTagAddBtn = document.getElementById('ef-new-tag-add');
 
@@ -635,9 +565,8 @@ function showEntryForm({ existing, availableTags = [], onSave }) {
     const val = newTagInput.value.trim();
     if (!val) return;
     const normalised = val.charAt(0).toUpperCase() + val.slice(1).toLowerCase();
-    // Check not already in selector
-    const existing_btn = tagSelector.querySelector(`[data-tag="${normalised}"]`);
-    if (!existing_btn) {
+    const existingBtn = tagSelector.querySelector(`[data-tag="${normalised}"]`);
+    if (!existingBtn) {
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'tag-filter-btn ef-tag-btn active';
@@ -646,7 +575,7 @@ function showEntryForm({ existing, availableTags = [], onSave }) {
       btn.textContent = normalised.toUpperCase();
       tagSelector.appendChild(btn);
     } else {
-      existing_btn.classList.add('active');
+      existingBtn.classList.add('active');
     }
     newTagInput.value = '';
   }
@@ -654,7 +583,6 @@ function showEntryForm({ existing, availableTags = [], onSave }) {
   newTagAddBtn.addEventListener('click', addTagToForm);
   newTagInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); addTagToForm(); } });
 
-  // Infobox rows
   const rowsContainer = document.getElementById('ef-infobox-rows');
   const existingRows = existing?.infoboxRows || [];
   existingRows.forEach(row => addInfoboxRow(row.key, row.val));
@@ -678,7 +606,6 @@ function showEntryForm({ existing, availableTags = [], onSave }) {
   document.getElementById('ef-cancel').addEventListener('click', closeForm);
   overlay.addEventListener('click', (e) => { if (e.target === overlay) closeForm(); });
 
-  // Save
   document.getElementById('ef-save').addEventListener('click', async () => {
     const title = document.getElementById('ef-title').value.trim();
     const subtitle = document.getElementById('ef-subtitle').value.trim();
@@ -687,7 +614,6 @@ function showEntryForm({ existing, availableTags = [], onSave }) {
     const imageCaption = document.getElementById('ef-image-caption').value.trim();
     const infoboxTitle = document.getElementById('ef-infobox-title').value.trim();
 
-    // Collect active tags
     const tags = [];
     tagSelector.querySelectorAll('.ef-tag-btn.active').forEach(btn => {
       if (btn.dataset.tag) tags.push(btn.dataset.tag);
@@ -726,118 +652,11 @@ function showEntryForm({ existing, availableTags = [], onSave }) {
   });
 }
 
-async function generatePasswordHash(password = 'Solveyra', salt = 'solv-wiki-salt-2025') {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(password + salt);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-  console.log(`Password hash generated:\n"${hash}"\n\nCopy this value into data/config.json as the "passwordHash" value.`);
-  return hash;
-}
+// ─── SHARED INIT ─────────────────────────────────────────────────────────────
 
 function initSharedUI() {
   initAuth().then(() => {
     loadGithubConfig();
     initConfigPanel();
-  });
-
-    // ── GLOBAL SEARCH ──
-  const searchInput = document.getElementById('global-search-input');
-  const searchModal = document.getElementById('search-results-modal');
-  const searchResultsList = document.getElementById('search-results-list');
-  const searchCloseBtn = document.getElementById('search-results-close');
-
-  if (!searchInput) return;
-
-  let allData = {};
-  const dataFiles = ['lore.json', 'overview.json', 'species.json', 'technology.json'];
-  const pageLabels = {
-    'lore.json': 'LORE',
-    'overview.json': 'OVERVIEW',
-    'species.json': 'SPECIES',
-    'technology.json': 'TECHNOLOGY'
-  };
-  
-  // Load all data files once
-  Promise.all(dataFiles.map(file => loadData(file).then(d => ({ file, data: d.content })))).then(results => {
-    results.forEach(({ file, data }) => {
-      allData[file] = data.entries || [];
-    });
-  });
-
-  function performSearch(query) {
-    if (!query.trim()) {
-      searchModal.classList.remove('open');
-      return;
-    }
-
-    const q = query.toLowerCase();
-    const results = [];
-
-    Object.entries(allData).forEach(([file, entries]) => {
-      const page = pageLabels[file];
-      entries.forEach((entry, idx) => {
-        const titleMatch = entry.title && entry.title.toLowerCase().includes(q);
-        const bodyMatch = entry.body && entry.body.toLowerCase().includes(q);
-        const tagsMatch = entry.tags && entry.tags.some(t => t.toLowerCase().includes(q));
-
-        if (titleMatch || bodyMatch || tagsMatch) {
-          const snippet = entry.body ? entry.body.substring(0, 100).replace(/\n/g, ' ') + '...' : '(no description)';
-          results.push({
-            page,
-            file,
-            title: entry.title,
-            snippet,
-            tags: entry.tags || [],
-            idx
-          });
-        }
-      });
-    });
-
-    // Render results
-    if (results.length === 0) {
-      searchResultsList.innerHTML = '<li style="padding:1rem;color:var(--text-dim);text-align:center;">No matches found</li>';
-    } else {
-      searchResultsList.innerHTML = results.map(r => `
-        <li class="search-result-item" data-file="${r.file}" data-idx="${r.idx}">
-          <div class="search-result-page">${r.page}</div>
-          <div class="search-result-title">${escapeHtml(r.title)}</div>
-          <div class="search-result-snippet">${escapeHtml(r.snippet)}</div>
-          ${r.tags.length > 0 ? `<div class="search-result-tags">${r.tags.map(t => `<span class="search-result-tag">${escapeHtml(t)}</span>`).join('')}</div>` : ''}
-        </li>
-      `).join('');
-
-      // Attach click handlers to results
-      searchResultsList.querySelectorAll('.search-result-item').forEach(li => {
-        li.addEventListener('click', () => {
-          const file = li.dataset.file;
-          const dataMap = {
-            'lore.json': 'lore.html',
-            'overview.json': 'overview.html',
-            'species.json': 'species.html',
-            'technology.json': 'technology.html'
-          };
-          window.location.href = dataMap[file];
-        });
-      });
-    }
-
-    searchModal.classList.add('open');
-  }
-
-  searchInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      performSearch(e.target.value);
-    }
-  });
-  searchInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') searchModal.classList.remove('open');
-  });
-
-  if (searchCloseBtn) searchCloseBtn.addEventListener('click', () => searchModal.classList.remove('open'));
-  if (searchModal) searchModal.addEventListener('click', (e) => {
-    if (e.target === searchModal) searchModal.classList.remove('open');
   });
 }

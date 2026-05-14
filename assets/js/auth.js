@@ -6,7 +6,9 @@ async function hashPassword(password, salt = 'solv-wiki-salt-2025') {
   return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
-let authConfig = null;
+// Salt is constant — no need to load from config at runtime.
+// The config.json hash is pre-generated with this salt.
+const AUTH_SALT = 'solv-wiki-salt-2025';
 
 async function loadAuthConfig() {
   try {
@@ -20,22 +22,23 @@ async function loadAuthConfig() {
 }
 
 async function initCorrectHash() {
-  if (!localStorage.getItem('solv_correct')) {
-    authConfig = await loadAuthConfig();
-    if (authConfig && authConfig.passwordHash) {
-      localStorage.setItem('solv_correct', authConfig.passwordHash);
-    } else {
-      const h = await hashPassword('Solveyra');
-      localStorage.setItem('solv_correct', h);
-      authConfig = { passwordHash: h, passwordSalt: 'solv-wiki-salt-2025' };
-    }
+  // Always re-derive the correct hash on every page load.
+  // Do NOT rely on localStorage for the correct hash — only for auth state.
+  const config = await loadAuthConfig();
+  if (config && config.passwordHash) {
+    // Store in sessionStorage so it's fresh each session but gone on tab close
+    sessionStorage.setItem('solv_correct', config.passwordHash);
+  } else {
+    // Fallback: hash default password
+    const h = await hashPassword('Solveyra', AUTH_SALT);
+    sessionStorage.setItem('solv_correct', h);
   }
 }
 
 async function attemptLogin(password) {
-  const salt = authConfig?.passwordSalt || '';
-  const hash = await hashPassword(password, salt);
-  const correct = localStorage.getItem('solv_correct');
+  // Always use the constant salt — never pull from a potentially-null authConfig
+  const hash = await hashPassword(password, AUTH_SALT);
+  const correct = sessionStorage.getItem('solv_correct');
   if (correct && hash === correct) {
     localStorage.setItem('solv_auth', 'true');
     return true;
@@ -73,6 +76,7 @@ function updateLoginTrigger() {
 }
 
 async function initAuth() {
+  // Re-derive correct hash fresh on every page load
   await initCorrectHash();
 
   const trigger = document.getElementById('login-trigger');
