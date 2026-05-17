@@ -66,20 +66,7 @@
         "Technology"
       ],
       "timestamp": "2026-05-08T14:00:37.131Z"
-    },
-    {
-      "title": "How Elenaric Crystals allow FTL travel",
-      "subtitle": "",
-      "body": "The key property is Resonant Energy Transmission, when a crystal receives focused energy input it re-emits it to nearby crystals in a roughly 1km radius, with negligible loss. On it's own this is just useful for wireless power transmission. The FTL effect comes in from something different, when the energy density crossing through a crystal lattice exceeds a certain threshold the crystal doesn't transmit it, it breifly warps the local metric around itself. The current theory among Solveyran physicists is that the crystal lattice interacts with the energy in a way that creates a localized reduction in what they call 'relativistic drag', ie, the resistance that spacetime exerts on matter reaching light speed. Above the threshold this drag reduction becomes total and the object punches through rather then just approaching lightspeed.\n\nHowever no single crystal can reach this threshold alone. It only emerges when multiple crystals are perfectly arranged in a focused array and their transmission fields overlap constructively. The original discovery was a massive ground based array focusing on a probe in low orbit, essentially an accidental particle accelerator built from the crystals.\n\nHowever for a self contained drive the array has to travel with the vessel, which creates the core engineering challenge. The crystals need to focus energy inward on the vessel itself whilst the vessel is inside the array. Think of it less like a rocket engine and that the vessel is sitting inside a focusing lens made of crystals, with the energy fed from outside the array and concentrated at the center.",
-      "image": "",
-      "imageCaption": "",
-      "infoboxTitle": "",
-      "infoboxRows": [],
-      "tags": [
-        "Technology"
-      ],
-      "timestamp": "2026-05-16T14:02:29.820Z"
     }
   ],
-  "lastUpdated": "2026-05-16T23:54:29.789Z"
+  "lastUpdated": "2026-05-17T00:00:17.513Z"
 }
