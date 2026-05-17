@@ -15,27 +15,60 @@ async function githubGetFile(path) {
   loadGithubConfig();
   const url = `https://api.github.com/repos/${window.GITHUB_OWNER}/${window.GITHUB_REPO}/contents/${path}?ref=${window.GITHUB_BRANCH}`;
   const res = await fetch(url, {
-    headers: { 'Authorization': `token ${window.GITHUB_TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
+    headers: {
+      'Authorization': `token ${window.GITHUB_TOKEN}`,
+      'Accept': 'application/vnd.github.v3+json',
+      'Cache-Control': 'no-cache'
+    }
   });
   if (!res.ok) { if (res.status === 404) return null; throw new Error(`GitHub GET failed: ${res.status}`); }
   const data = await res.json();
   return { content: JSON.parse(atob(data.content.replace(/\n/g, ''))), sha: data.sha };
 }
 
-async function githubSaveFile(path, content, sha, commitMessage) {
+async function githubGetSHA(path) {
+  // Fetch only the SHA of a file without parsing content — used before writes
   loadGithubConfig();
+  const url = `https://api.github.com/repos/${window.GITHUB_OWNER}/${window.GITHUB_REPO}/contents/${path}?ref=${window.GITHUB_BRANCH}`;
+  const res = await fetch(url, {
+    headers: {
+      'Authorization': `token ${window.GITHUB_TOKEN}`,
+      'Accept': 'application/vnd.github.v3+json',
+      'Cache-Control': 'no-cache'
+    }
+  });
+  if (!res.ok) { if (res.status === 404) return null; throw new Error(`GitHub SHA fetch failed: ${res.status}`); }
+  const data = await res.json();
+  return data.sha;
+}
+
+async function githubSaveFile(path, content, commitMessage) {
+  loadGithubConfig();
+
+  // Always fetch the latest SHA immediately before writing
+  const freshSHA = await githubGetSHA(path);
+
   const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(content, null, 2))));
-  const body = { message: commitMessage || `Update ${path}`, content: encoded, branch: window.GITHUB_BRANCH };
-  if (sha) body.sha = sha;
+  const body = {
+    message: commitMessage || `Update ${path}`,
+    content: encoded,
+    branch: window.GITHUB_BRANCH
+  };
+  if (freshSHA) body.sha = freshSHA;
+
   const url = `https://api.github.com/repos/${window.GITHUB_OWNER}/${window.GITHUB_REPO}/contents/${path}`;
   const res = await fetch(url, {
     method: 'PUT',
-    headers: { 'Authorization': `token ${window.GITHUB_TOKEN}`, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+    headers: {
+      'Authorization': `token ${window.GITHUB_TOKEN}`,
+      'Accept': 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json'
+    },
     body: JSON.stringify(body)
   });
-  if (!res.ok) { 
-    const err = await res.json(); 
-    throw new Error(`GitHub save failed: ${err.message}`); 
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(`GitHub save failed: ${err.message}`);
   }
   return await res.json();
 }
@@ -55,16 +88,14 @@ async function loadData(filename) {
   } catch (e) { return { content: { entries: [] }, sha: null }; }
 }
 
-async function saveEntry(filename, entries, sha) {
+async function saveEntry(filename, entries) {
+  // SHA is now fetched fresh inside githubSaveFile — no need to pass it in
   loadGithubConfig();
-  if (!window.GITHUB_OWNER || !window.GITHUB_TOKEN) throw new Error('GitHub not configured. Enter credentials on the home page.');
-  
+  if (!window.GITHUB_OWNER || !window.GITHUB_TOKEN) {
+    throw new Error('GitHub not configured. Enter credentials on the home page.');
+  }
   const content = { entries, lastUpdated: new Date().toISOString() };
-  
-  // Don't refetch SHA before saving - trust the PUT response instead
-  // Refetching causes GitHub API consistency lag issues where GET returns stale SHAs
-  const saveResult = await githubSaveFile(`data/${filename}`, content, sha, `Update ${filename}`);
-  return saveResult;
+  return await githubSaveFile(`data/${filename}`, content, `Update ${filename}`);
 }
 
 function initConfigPanel() {
@@ -86,9 +117,12 @@ function initConfigPanel() {
     saveBtn.addEventListener('click', () => {
       const owner = ownerInput?.value.trim();
       const token = tokenInput?.value.trim();
-      if (!owner || !token) { if (status) { status.textContent = '// Error: both fields required'; status.className = 'form-status visible error'; } return; }
+      if (!owner || !token) {
+        if (status) { status.textContent = '// Error: both fields required'; status.className = 'form-status error'; }
+        return;
+      }
       setGithubConfig(owner, token);
-      if (status) { status.textContent = '// Config saved for this session'; status.className = 'form-status visible success'; }
+      if (status) { status.textContent = '// Config saved'; status.className = 'form-status success'; }
       setTimeout(() => { panel.style.display = 'none'; }, 1500);
     });
   }

@@ -3,11 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SOLVEYRA — LORE ARCHIVE</title>
+  <title>SOLVEYRA — CHARACTERS</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="stylesheet" href="assets/css/style.css" />
   <style>
-    /* Tag system styling (also in global stylesheet for other pages) */
     .tag-filter-bar {
       background: var(--deep);
       border: 1px solid var(--border);
@@ -40,28 +39,10 @@
       transition: all 0.15s;
       white-space: nowrap;
     }
-    .tag-filter-btn:hover {
-      border-color: var(--teal-mid);
-      color: var(--text-bright);
-    }
-    .tag-filter-btn.active {
-      background: var(--teal-dim);
-      border-color: var(--teal-hot);
-      color: var(--teal-hot);
-      box-shadow: 0 0 6px var(--teal-glow);
-    }
-    .tag-filter-btn.all-btn.active {
-      background: var(--teal-dim);
-      border-color: var(--teal-bright);
-      color: var(--teal-bright);
-    }
-    .tag-filter-divider {
-      width: 1px;
-      height: 16px;
-      background: var(--border);
-      margin: 0 0.1rem;
-      flex-shrink: 0;
-    }
+    .tag-filter-btn:hover { border-color: var(--teal-mid); color: var(--text-bright); }
+    .tag-filter-btn.active { background: var(--teal-dim); border-color: var(--teal-hot); color: var(--teal-hot); box-shadow: 0 0 6px var(--teal-glow); }
+    .tag-filter-btn.all-btn.active { background: var(--teal-dim); border-color: var(--teal-bright); color: var(--teal-bright); }
+    .tag-filter-divider { width: 1px; height: 16px; background: var(--border); margin: 0 0.1rem; flex-shrink: 0; }
     .tag-custom-input {
       background: var(--black);
       border: 1px dashed var(--border);
@@ -75,14 +56,8 @@
       width: 110px;
       transition: border-color 0.2s;
     }
-    .tag-custom-input::placeholder {
-      color: var(--text-dim);
-      text-transform: uppercase;
-      font-size: 0.6rem;
-    }
-    .tag-custom-input:focus {
-      border-color: var(--teal-mid);
-    }
+    .tag-custom-input::placeholder { color: var(--text-dim); text-transform: uppercase; font-size: 0.6rem; }
+    .tag-custom-input:focus { border-color: var(--teal-mid); }
     .tag-custom-add {
       background: transparent;
       border: 1px dashed var(--teal-mid);
@@ -95,50 +70,12 @@
       cursor: pointer;
       transition: all 0.15s;
     }
-    .tag-custom-add:hover {
-      border-color: var(--teal-bright);
-      color: var(--teal-bright);
-    }
-
-    .sidebar-entry-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 3px;
-      margin-top: 3px;
-    }
-    .sidebar-tag-chip {
-      font-size: 0.55rem;
-      color: var(--text-dim);
-      border: 1px solid var(--border);
-      padding: 1px 5px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .viewer-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      margin-top: 6px;
-    }
-    .viewer-tag-chip {
-      font-size: 0.6rem;
-      color: var(--teal-bright);
-      border: 1px solid var(--teal-mid);
-      background: var(--teal-dim);
-      padding: 2px 7px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    .sidebar-count {
-      font-family: var(--font-terminal);
-      font-size: 0.8rem;
-      color: var(--text-dim);
-      padding: 0.4rem 1.2rem;
-      border-bottom: 1px solid var(--border);
-      letter-spacing: 0.1em;
-    }
+    .tag-custom-add:hover { border-color: var(--teal-bright); color: var(--teal-bright); }
+    .sidebar-entry-tags { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 3px; }
+    .sidebar-tag-chip { font-size: 0.55rem; color: var(--text-dim); border: 1px solid var(--border); padding: 1px 5px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .viewer-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+    .viewer-tag-chip { font-size: 0.6rem; color: var(--teal-bright); border: 1px solid var(--teal-mid); background: var(--teal-dim); padding: 2px 7px; letter-spacing: 0.1em; text-transform: uppercase; }
+    .sidebar-count { font-family: var(--font-terminal); font-size: 0.8rem; color: var(--text-dim); padding: 0.4rem 1.2rem; border-bottom: 1px solid var(--border); letter-spacing: 0.1em; }
   </style>
 </head>
 <body>
@@ -159,7 +96,7 @@
   <nav id="site-nav">
     <a class="nav-link" href="index.html" onclick="SFX&&SFX.click()">// HOME</a>
     <a class="nav-link" href="overview.html" onclick="SFX&&SFX.click()">// OVERVIEW</a>
-    <a class="nav-link active" href="lore.html" onclick="SFX&&SFX.click()">// LORE</a>
+    <a class="nav-link" href="lore.html" onclick="SFX&&SFX.click()">// LORE</a>
     <a class="nav-link" href="technology.html" onclick="SFX&&SFX.click()">// TECHNOLOGY</a>
     <a class="nav-link" href="species.html" onclick="SFX&&SFX.click()">// SPECIES</a>
     <a class="nav-link active" href="characters.html" onclick="SFX&&SFX.click()">// CHARACTERS</a>
@@ -169,10 +106,9 @@
 
     <div class="editor-bar" id="editor-bar">
       <span class="editor-bar-label">// EDITOR MODE ACTIVE</span>
-      <button class="add-entry-btn" id="lore-add-btn">+ ADD ENTRY</button>
+      <button class="add-entry-btn" id="characters-add-btn">+ ADD ENTRY</button>
     </div>
 
-    <!-- TAG FILTER BAR -->
     <div class="tag-filter-bar" id="tag-filter-bar">
       <span class="tag-filter-label">// FILTER:</span>
       <button class="tag-filter-btn all-btn active" data-tag="__all__">ALL</button>
@@ -184,11 +120,12 @@
     </div>
 
     <div class="sidebar-layout">
-      <div class="sidebar" id="lore-sidebar">
-        <div class="sidebar-header">// LORE INDEX</div>
+      <div class="sidebar" id="characters-sidebar">
+        <div class="sidebar-header">// CHARACTERS INDEX</div>
+        <div class="sidebar-count" id="sidebar-count">// 0 ENTRIES</div>
         <ul class="sidebar-list"></ul>
       </div>
-      <div class="doc-viewer" id="lore-viewer">
+      <div class="doc-viewer" id="characters-viewer">
         <div class="doc-viewer-header">
           <div class="doc-viewer-title">// SELECT AN ENTRY</div>
           <div></div>
@@ -222,18 +159,6 @@
   </div>
 </div>
 
-<div id="search-results-modal">
-  <div id="search-results-content">
-    <div id="search-results-header">
-      <h2>SEARCH RESULTS</h2>
-      <button id="search-results-close">// CLOSE</button>
-    </div>
-    <ul id="search-results-list">
-      <li style="padding:1rem;color:var(--text-dim);text-align:center;">Enter search terms to find entries</li>
-    </ul>
-  </div>
-</div>
-
 <script src="assets/js/github.js"></script>
 <script src="assets/js/auth.js"></script>
 <script src="assets/js/page.js"></script>
@@ -241,12 +166,13 @@
   document.addEventListener('DOMContentLoaded', () => {
     initSharedUI();
     initSidebarPage({
-      sidebarId: 'lore-sidebar',
-      viewerId: 'lore-viewer',
+      sidebarId: 'characters-sidebar',
+      viewerId: 'characters-viewer',
       editorBarId: 'editor-bar',
-      addBtnId: 'lore-add-btn',
-      dataFile: 'lore.json',
-      tagFilterBarId: 'tag-filter-bar'
+      addBtnId: 'characters-add-btn',
+      dataFile: 'characters.json',
+      tagFilterBarId: 'tag-filter-bar',
+      sidebarCountId: 'sidebar-count'
     });
   });
 </script>

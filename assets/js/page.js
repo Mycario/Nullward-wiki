@@ -402,7 +402,7 @@ function initSidebarPage(config) {
     if (!confirm(`Delete "${title}"?`)) return;
     currentData.entries.splice(idx, 1);
     try {
-      await saveEntry(dataFile, currentData.entries, currentData.sha);
+      await saveEntry(dataFile, currentData.entries);
       activeIndex = null;
       await loadEntries();
     } catch (e) { alert('Delete failed: ' + e.message); }
@@ -443,8 +443,7 @@ function initSidebarPage(config) {
         } else {
           currentData.entries.push({ ...entryData, timestamp: new Date().toISOString() });
         }
-        const result = await saveEntry(dataFile, currentData.entries, currentData.sha);
-        currentData.sha = result?.content?.sha || currentData.sha;
+        await saveEntry(dataFile, currentData.entries);
         activeIndex = editIdx !== null ? editIdx : currentData.entries.length - 1;
         renderTagFilterBar();
         renderSidebar();
