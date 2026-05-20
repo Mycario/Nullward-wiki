@@ -13,7 +13,7 @@ function setGithubConfig(owner, token) {
 
 async function githubGetFile(path) {
   loadGithubConfig();
-  const url = `https://api.github.com/repos/${window.GITHUB_OWNER}/${window.GITHUB_REPO}/contents/${path}?ref=${window.GITHUB_BRANCH}`;
+  const url = `https://api.github.com/repos/${window.GITHUB_OWNER}/${window.GITHUB_REPO}/contents/${path}?ref=${window.GITHUB_BRANCH}&t=${Date.now()}`;
   const res = await fetch(url, {
     headers: {
       'Authorization': `token ${window.GITHUB_TOKEN}`,
@@ -26,9 +26,9 @@ async function githubGetFile(path) {
 }
 
 async function githubGetSHA(path) {
-  // Fetch only the SHA of a file without parsing content — used before writes
+  // Always fetch fresh SHA immediately before writes — timestamp prevents browser caching
   loadGithubConfig();
-  const url = `https://api.github.com/repos/${window.GITHUB_OWNER}/${window.GITHUB_REPO}/contents/${path}?ref=${window.GITHUB_BRANCH}`;
+  const url = `https://api.github.com/repos/${window.GITHUB_OWNER}/${window.GITHUB_REPO}/contents/${path}?ref=${window.GITHUB_BRANCH}&t=${Date.now()}`;
   const res = await fetch(url, {
     headers: {
       'Authorization': `token ${window.GITHUB_TOKEN}`,
@@ -77,10 +77,10 @@ async function loadData(filename) {
     try {
       const result = await githubGetFile(`data/${filename}`);
       if (result) return result;
-    } catch (e) { console.warn('GitHub fetch failed, falling back to local:', e); }
+    } catch (e) { console.warn('GitHub API fetch failed, falling back to static file:', e); }
   }
   try {
-    const res = await fetch(`data/${filename}`);
+    const res = await fetch(`data/${filename}?t=${Date.now()}`);
     if (!res.ok) return { content: { entries: [] }, sha: null };
     return { content: await res.json(), sha: null };
   } catch (e) { return { content: { entries: [] }, sha: null }; }
