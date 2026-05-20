@@ -53,7 +53,21 @@
       "tags": [
         "Planet"
       ]
+    },
+    {
+      "title": "Solveyra's Political Ideology",
+      "subtitle": "",
+      "body": "Solveyra doesn't operate under any formal ideology, however the structure of it's government and values embed it firmly within a specific political tradition.\n\n##Sortition\n\nThe foundation of Solveyran democracy is sortition, the selection of governing bodies are done via lottery instead of a conventional election. Citizens are not voted into power by campaign or platform, instead civilians are voted into power by their peers via a nation wide lottery, with the 8 highest regarded being seated on the council. This system was designed to prevent consolidation of political power amongst a certain class and to ensure that governance remains a civic function rather then a career. The result is that the council can include scientists, engineers, administrators, and even the common man.",
+      "image": "",
+      "imageCaption": "",
+      "infoboxTitle": "",
+      "infoboxRows": [],
+      "tags": [
+        "Nation",
+        "Government"
+      ],
+      "timestamp": "2026-05-20T02:54:30.615Z"
     }
   ],
-  "lastUpdated": "2026-05-17T00:05:09.070Z"
+  "lastUpdated": "2026-05-20T02:54:30.615Z"
 }
