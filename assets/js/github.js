@@ -17,8 +17,7 @@ async function githubGetFile(path) {
   const res = await fetch(url, {
     headers: {
       'Authorization': `token ${window.GITHUB_TOKEN}`,
-      'Accept': 'application/vnd.github.v3+json',
-      'Cache-Control': 'no-cache'
+      'Accept': 'application/vnd.github.v3+json'
     }
   });
   if (!res.ok) { if (res.status === 404) return null; throw new Error(`GitHub GET failed: ${res.status}`); }
@@ -33,8 +32,7 @@ async function githubGetSHA(path) {
   const res = await fetch(url, {
     headers: {
       'Authorization': `token ${window.GITHUB_TOKEN}`,
-      'Accept': 'application/vnd.github.v3+json',
-      'Cache-Control': 'no-cache'
+      'Accept': 'application/vnd.github.v3+json'
     }
   });
   if (!res.ok) { if (res.status === 404) return null; throw new Error(`GitHub SHA fetch failed: ${res.status}`); }
